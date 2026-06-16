@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { metaFor } from '../lib/docs.ts';
+
+const docs = (await getCollection('docs'))
+  .map((d) => ({ id: d.id, ...metaFor(d.id) }))
+  .sort((a, b) => a.order - b.order);
+
+const cards = [
+  { src: '/card/Phases.svg', title: 'SPEF 四阶段与边界' },
+  { src: '/card/Criteria.svg', title: '强度核算判据' },
+  { src: '/card/Bet.svg', title: '五秒下注' },
+  { src: '/card/Termination.svg', title: '终止条件' },
+];
+---
+
+<Base>
+  <section class="hero reveal reveal-1">
+    <span class="eyebrow">Scan · Plan · Execute · Feedback</span>
+    <h1>校准低效度反馈环境中的人类判断</h1>
+    <p class="lede">
+      最危险的错误从不触发报警；当下的自我评估在原理上不可信；所以判断必须被外置成可证伪、带时间戳、由现实结算的痕迹。
+    </p>
+
+    <ul class="phases">
+      <li><b>S</b> Scan<span class="sep">·</span>扫描</li>
+      <li><b>P</b> Plan<span class="sep">·</span>计划</li>
+      <li><b>E</b> Execute<span class="sep">·</span>执行</li>
+      <li><b>F</b> Feedback<span class="sep">·</span>反馈</li>
+    </ul>
+
+    <ul class="threelines">
+      <li class="a reveal reveal-2">
+        <span class="tag">线 A · 结构</span>
+        <span class="desc">必然存在一个自动守门员永远看不见、因此无法闭合的反馈环。</span>
+      </li>
+      <li class="b reveal reveal-3">
+        <span class="tag">线 B · 运行</span>
+        <span class="desc">人作为闭环传感器,有效增益随负荷衰减——名义闭合、实质开环。</span>
+      </li>
+      <li class="c reveal reveal-4">
+        <span class="tag">线 C · 认识论</span>
+        <span class="desc">自校准在原理上不可能;校准只能外包给时间上的未来的自己。</span>
+      </li>
+    </ul>
+  </section>
+
+  <p class="section-label">框架文档</p>
+  <div class="doc-cards">
+    {
+      docs.map((d) => (
+        <a class="doc-card" href={`/docs/${d.id}/`}>
+          <div class="row">
+            <h3>{d.title}</h3>
+            <span class="arrow">→</span>
+          </div>
+          <p>{d.blurb}</p>
+        </a>
+      ))
+    }
+
+    <a class="diagram-cta" href="/diagram">
+      <span>
+        <strong>三线论证映射图</strong>
+        <span class="sub">每个章节到其逻辑角色的可视化地图</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <p class="section-label">速查卡片</p>
+  <div class="card-gallery">
+    {
+      cards.map((c) => (
+        <a class="ref-card" href={c.src} target="_blank" rel="noopener" aria-label={c.title}>
+          <img src={c.src} alt={c.title} loading="lazy" width="1040" height="660" />
+        </a>
+      ))
+    }
+  </div>
+</Base>

@@ -1,0 +1,49 @@
+# Caddy site block for the SPEF static site.
+# Append this to the existing /etc/caddy/Caddyfile (alongside clu / vip blocks),
+# then: sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy
+#
+# Serves the built Astro output copied to /var/www/spef. Caddy obtains/renews
+# HTTPS automatically once spef.veathered.top resolves to this server.
+#
+# NOTE: X-Frame-Options is SAMEORIGIN (not DENY) because /diagram embeds the
+# same-origin diagram.html in an iframe; DENY would blank it out.
+
+spef.veathered.top {
+	root * /var/www/spef
+	encode gzip zstd
+	file_server {
+		hide .git .env .DS_Store
+		index index.html
+	}
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), usb=(), xr-spatial-tracking=()"
+		-Server
+	}
+
+	# Fingerprinted Astro assets are immutable — cache hard.
+	@assets path /_astro/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	# Block accidental dotfiles.
+	@sensitive path /.git/* /.env /.DS_Store /Thumbs.db
+	respond @sensitive 404
+
+	# Styled 404 for unknown routes.
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+
+	log {
+		output file /var/log/caddy/spef.access.log {
+			roll_size 10MB
+			roll_keep 5
+			roll_keep_for 168h
+		}
+		format json
+	}
+}

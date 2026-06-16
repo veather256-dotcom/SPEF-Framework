@@ -1,0 +1,36 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Droid Sans Fallback',sans-serif">
+  <rect width="1040" height="660" fill="#070d1a"/>
+  <rect x="16" y="16" width="1008" height="628" rx="18" fill="#0b1422" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="62" cy="68" r="24" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
+  <text x="62" y="78" font-size="28" fill="#fbbf24" text-anchor="middle" font-weight="bold">2</text>
+  <text x="102" y="78" font-size="34" fill="#fde68a" font-weight="bold">五秒赌注模板</text>
+  <text x="1004" y="74" font-size="18" fill="#475569" text-anchor="end">手册 §2.2</text>
+  <line x1="40" y1="104" x2="1000" y2="104" stroke="#1e293b" stroke-width="1.5"/>
+
+  <rect x="40" y="128" width="960" height="150" rx="12" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
+  <text x="64" y="164" font-size="18" fill="#94a3b8">押一个高风险点"应该没问题"的当下，写：</text>
+  <text x="520" y="214" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">「我赌此处无误，因为 ___」</text>
+  <text x="520" y="256" font-size="19" fill="#fde68a" text-anchor="middle">写成赖不掉的硬陈述 →「看结果前」带时间戳落盘（git 提交）</text>
+
+  <text x="64" y="318" font-size="20" fill="#cbd5e1">自信度三档（与赌注一起记）：</text>
+  <circle cx="430" cy="312" r="11" fill="#34d399"/><text x="450" y="319" font-size="20" fill="#d1fae5">高</text>
+  <circle cx="560" cy="312" r="11" fill="#fbbf24"/><text x="580" y="319" font-size="20" fill="#fde68a">中</text>
+  <circle cx="690" cy="312" r="11" fill="#f43f5e"/><text x="710" y="319" font-size="20" fill="#fecdd3">低</text>
+
+  <text x="64" y="372" font-size="22" fill="#cbd5e1" font-weight="bold">两条通道（承重不同，别混）</text>
+  <rect x="40" y="388" width="465" height="150" rx="10" fill="#00140f" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="64" y="422" font-size="21" fill="#2dd4bf" font-weight="bold">通道一　预测—结算</text>
+  <text x="64" y="454" font-size="17" fill="#99f6e4">只靠 存在 + 可证伪 + 现实结算。</text>
+  <text x="64" y="482" font-size="17" fill="#99f6e4">confabulation 腐蚀不到它。</text>
+  <text x="64" y="516" font-size="18" fill="#34d399" font-weight="bold">→ 承重主力</text>
+
+  <rect x="535" y="388" width="465" height="150" rx="10" fill="#10002a" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="559" y="422" font-size="21" fill="#c084fc" font-weight="bold">通道二　写"因为"</text>
+  <text x="559" y="454" font-size="17" fill="#ede9fe">靠 self-explanation 暴露裂缝。</text>
+  <text x="559" y="482" font-size="17" fill="#ede9fe">confabulation 严重时失效。</text>
+  <text x="559" y="516" font-size="18" fill="#a78bfa" font-weight="bold">→ 锦上添花</text>
+
+  <rect x="40" y="552" width="960" height="76" rx="10" fill="#1a0010" stroke="#f43f5e" stroke-width="1.2"/>
+  <text x="64" y="586" font-size="18" fill="#fecdd3">⚠ 别用"两个一致的因为"去抓 confabulation——会奖励最会圆话的人。</text>
+  <text x="64" y="614" font-size="18" fill="#fda4af">　两个"因为"的真正用途：扩大可证伪面、提升分辨力。</text>
+</svg>

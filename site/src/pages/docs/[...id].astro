@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { metaFor } from '../../lib/docs.ts';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((doc) => ({ params: { id: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const meta = metaFor(doc.id);
+const { Content } = await render(doc);
+---
+
+<Base title={meta.title} description={meta.blurb}>
+  <div class="doc-head">
+    <a class="back" href="/">← 返回框架</a>
+  </div>
+  <article class="prose">
+    <Content />
+  </article>
+</Base>

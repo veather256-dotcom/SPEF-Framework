@@ -1,0 +1,20 @@
+# Layer-1 private content (never publish)
+private/
+
+# Local-only infrastructure (never publish)
+CLAUDE.md
+LAYERING.md
+
+# Node / Astro (site/)
+node_modules/
+site/node_modules/
+site/dist/
+site/.astro/
+
+# generated static mirror
+site/public/diagram.html
+site/public/card/
+
+.DS_Store
+.env
+.env.*

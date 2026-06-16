@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+// The argument map is a self-contained dark-themed HTML doc; isolate its styles
+// in an iframe. It is synced into site/public/diagram.html by scripts/sync-static.mjs.
+---
+
+<Base title="论证图" bleed>
+  <iframe
+    class="diagram-frame"
+    src="/diagram.html"
+    title="SPEF 三线论证映射图"
+    loading="lazy"></iframe>
+</Base>

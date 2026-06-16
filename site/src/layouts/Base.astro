@@ -1,0 +1,117 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** When true, main fills the viewport with no padding (used by the diagram page). */
+  bleed?: boolean;
+}
+
+const {
+  title,
+  description = '在低效度反馈环境中校准人类判断的工作流方法论。最危险的错误从不触发报警，自我评估在原理上不可靠，所以判断必须被外置成可证伪、带时间戳、由现实结算的痕迹。',
+  bleed = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · SPEF` : 'SPEF';
+const path = Astro.url.pathname;
+const isHome = path === '/';
+const isDiagram = path.startsWith('/diagram');
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#070d1a" media="(prefers-color-scheme: dark)" />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('spef-theme');
+          if (saved === 'light' || saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    {!bleed && <div class="read-progress" id="readProgress"></div>}
+
+    <header class="site-header">
+      <div class="bar">
+        <a href="/" class="brand"><span class="dot" aria-hidden="true"></span>SPEF</a>
+        <nav>
+          <a href="/" class={isHome ? 'active' : ''}>框架</a>
+          <a href="/diagram" class={isDiagram ? 'active' : ''}>论证图</a>
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="切换深浅色"
+            title="切换深浅色">
+            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class={bleed ? 'bleed' : ''}>
+      <slot />
+    </main>
+
+    {
+      !bleed && (
+        <footer class="site-footer">
+          <p>SPEF · 在低效度反馈环境中校准人类判断的工作流方法论</p>
+          <p class="fine">
+            它给不出"你已进步"的证明；它给每一次自欺装一份迟到、但赖不掉的账单。
+          </p>
+        </footer>
+      )
+    }
+
+    <script is:inline>
+      (() => {
+        const btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const root = document.documentElement;
+            const current =
+              root.getAttribute('data-theme') ||
+              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            const next = current === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('spef-theme', next); } catch (e) {}
+          });
+        }
+
+        const bar = document.getElementById('readProgress');
+        if (bar) {
+          const update = () => {
+            const h = document.documentElement;
+            const max = h.scrollHeight - h.clientHeight;
+            const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+            bar.style.width = pct + '%';
+          };
+          update();
+          window.addEventListener('scroll', update, { passive: true });
+          window.addEventListener('resize', update, { passive: true });
+        }
+      })();
+    </script>
+  </body>
+</html>

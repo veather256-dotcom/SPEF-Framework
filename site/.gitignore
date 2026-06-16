@@ -1,0 +1,16 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# generated static (synced from repo-root public/ by scripts/sync-static.mjs)
+public/diagram.html
+public/card/
+
+# env / logs
+.env
+.env.production
+npm-debug.log*
+.DS_Store

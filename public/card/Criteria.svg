@@ -1,0 +1,48 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Droid Sans Fallback',sans-serif">
+  <rect width="1040" height="660" fill="#070d1a"/>
+  <rect x="16" y="16" width="1008" height="628" rx="18" fill="#0b1422" stroke="#1e293b" stroke-width="2"/>
+  <!-- header -->
+  <circle cx="62" cy="68" r="24" fill="#00140f" stroke="#2dd4bf" stroke-width="2"/>
+  <text x="62" y="78" font-size="28" fill="#2dd4bf" text-anchor="middle" font-weight="bold">3</text>
+  <text x="102" y="78" font-size="34" fill="#99f6e4" font-weight="bold">押注判据 · L 三区制</text>
+  <text x="1004" y="74" font-size="18" fill="#475569" text-anchor="end">手册 §2.3</text>
+  <line x1="40" y1="104" x2="1000" y2="104" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- formula -->
+  <rect x="40" y="126" width="960" height="86" rx="12" fill="#00140f" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="520" y="172" font-size="30" fill="#99f6e4" text-anchor="middle" font-family="'SFMono-Regular','Consolas',monospace">L = R_L (覆盖的真实风险占比) ÷ φ (主观押注覆盖率)</text>
+  <text x="520" y="200" font-size="16" fill="#64748b" text-anchor="middle">按区制读，不按数值线性比；周期聚合后读，非单次评分</text>
+
+  <!-- three regimes -->
+  <g>
+    <rect x="40" y="228" width="960" height="68" rx="10" fill="#001409" stroke="#34d399" stroke-width="1.5"/>
+    <text x="70" y="270" font-size="26" fill="#34d399" font-weight="bold" font-family="monospace">L &gt; 1</text>
+    <text x="220" y="263" font-size="21" fill="#d1fae5">押对——带宽压在高风险处</text>
+    <text x="980" y="270" font-size="19" fill="#34d399" text-anchor="end" font-weight="bold">保持</text>
+  </g>
+  <g>
+    <rect x="40" y="304" width="960" height="68" rx="10" fill="#150a00" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="70" y="346" font-size="26" fill="#fbbf24" font-weight="bold" font-family="monospace">L ≈ 1</text>
+    <text x="220" y="339" font-size="21" fill="#fde68a">橡皮图章 / 昂贵均摊</text>
+    <text x="980" y="346" font-size="19" fill="#fbbf24" text-anchor="end" font-weight="bold">停止均摊，重新聚焦</text>
+  </g>
+  <g>
+    <rect x="40" y="380" width="960" height="68" rx="10" fill="#1a0010" stroke="#f43f5e" stroke-width="1.5"/>
+    <text x="70" y="422" font-size="26" fill="#f43f5e" font-weight="bold" font-family="monospace">L &lt; 1</text>
+    <text x="220" y="415" font-size="21" fill="#fecdd3"><tspan font-weight="bold" fill="#fb7185">显著性陷阱</tspan>——专看不出事处</text>
+    <text x="980" y="422" font-size="19" fill="#f43f5e" text-anchor="end" font-weight="bold">警报：勤奋正在加害</text>
+  </g>
+
+  <!-- depth split + danger -->
+  <rect x="40" y="464" width="465" height="164" rx="10" fill="#05111f" stroke="#1e293b"/>
+  <text x="64" y="498" font-size="20" fill="#bfdbfe" font-weight="bold">深浅分流</text>
+  <text x="64" y="532" font-size="18" fill="#cbd5e1">浅问题 → 重押直觉（错了不亏）</text>
+  <text x="64" y="566" font-size="18" fill="#cbd5e1">深问题 → 早转扫描</text>
+  <text x="64" y="600" font-size="15" fill="#64748b">深 bug 不显眼，直觉胜率最低</text>
+
+  <rect x="535" y="464" width="465" height="164" rx="10" fill="#1a0010" stroke="#f43f5e" stroke-width="1.2"/>
+  <text x="559" y="498" font-size="20" fill="#fb7185" font-weight="bold">最危险信号</text>
+  <text x="559" y="532" font-size="18" fill="#fecdd3">扫得远超预期、概率却不升</text>
+  <text x="559" y="566" font-size="18" fill="#fecdd3">→ 不是"还没扫够"</text>
+  <text x="559" y="600" font-size="18" fill="#f43f5e" font-weight="bold">→ bug 在边界外，跳出去重扫边界</text>
+</svg>
