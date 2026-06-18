@@ -3,13 +3,13 @@
   <rect x="16" y="16" width="1008" height="628" rx="18" fill="#0b1422" stroke="#1e293b" stroke-width="2"/>
   <circle cx="62" cy="68" r="24" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
   <text x="62" y="78" font-size="28" fill="#fbbf24" text-anchor="middle" font-weight="bold">2</text>
-  <text x="102" y="78" font-size="34" fill="#fde68a" font-weight="bold">五秒赌注模板</text>
+  <text x="102" y="78" font-size="34" fill="#fde68a" font-weight="bold">瞬时预判押注模板</text>
   <text x="1004" y="74" font-size="18" fill="#475569" text-anchor="end">手册 §2.2</text>
   <line x1="40" y1="104" x2="1000" y2="104" stroke="#1e293b" stroke-width="1.5"/>
 
   <rect x="40" y="128" width="960" height="150" rx="12" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
   <text x="64" y="164" font-size="18" fill="#94a3b8">押一个高风险点"应该没问题"的当下，写：</text>
-  <text x="520" y="214" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">「我赌此处无误，因为 ___」</text>
+  <text x="520" y="214" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">「预判此处无误，因为 ___」</text>
   <text x="520" y="256" font-size="19" fill="#fde68a" text-anchor="middle">写成赖不掉的硬陈述 →「看结果前」带时间戳落盘（git 提交）</text>
 
   <text x="64" y="318" font-size="20" fill="#cbd5e1">自信度三档（与赌注一起记）：</text>

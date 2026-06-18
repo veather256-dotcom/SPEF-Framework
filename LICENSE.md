@@ -16,7 +16,7 @@ Copyright © 2026 Veather (https://spef.veathered.top).
 | What | License |
 |---|---|
 | `site/` (Astro application), `deploy/` (scripts, Caddyfile), and other build/config files | **MIT** |
-| Published framework text & visuals under `public/` — `SPEF_paper_v3.md`, `SPEF_handbook.md`, `SPEF_production_card.md`, the textual content of `SPEF_diagram.html`, and `public/card/*` | **CC BY 4.0** |
+| Published framework text & visuals under `public/` — `SPEF_paper_v6.md`, `SPEF_handbook.md`, `SPEF_production_card.md`, the textual content of `SPEF_diagram.html`, and `public/card/*` | **CC BY 4.0** |
 | `private/` (Appendix F), `CLAUDE.md`, `LAYERING.md` — internal/unpublished working documents | **All rights reserved** (not granted under either license) |
 
 If a file's classification is ever unclear, the **All rights reserved** default applies until stated otherwise.

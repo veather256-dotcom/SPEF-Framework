@@ -14,8 +14,8 @@ export const docMeta: Record<string, DocMeta> = {
     blurb: '为什么 / 怎么做 / 边界。每天执行的主文档，每条操作都标注了论证根。',
     order: 1,
   },
-  spef_paper_v3: {
-    title: '论文 v3',
+  spef_paper_v6: {
+    title: '论文 v6',
     blurb: '完整论证：三线并联证明、强度核算纪律与两处不可证明的残洞。',
     order: 2,
   },
