@@ -119,10 +119,15 @@ rm -rf "$TMP" "$BK" 2>/dev/null
 echo SWAP_OK
 '@
 $swap = $swapTemplate.Replace('__TMP__', $script:TmpDir).Replace('__ROOT__', $WebRoot) -replace "`r`n", "`n"
+# Pass the script base64-encoded so Windows PowerShell's native-arg quoting
+# can't mangle the embedded quotes/parens/newlines (it silently strips inner
+# double quotes, which breaks unquoted shell tokens like "(incomplete upload)").
+# The b64 payload contains only [A-Za-z0-9+/=] — nothing the arg layer touches.
+$swapB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($swap))
 
 Write-Host "==> Swapping into $WebRoot (with snapshot rollback)" -ForegroundColor Cyan
 Invoke-Retry -What 'Swap' -Action {
-    ssh $SshOpts "$Target" $swap
+    ssh $SshOpts "$Target" "echo $swapB64 | base64 -d | bash"
 }
 
 # ---------------- 4. soft post-deploy check ----------------
