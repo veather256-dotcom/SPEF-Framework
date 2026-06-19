@@ -32,8 +32,8 @@
   --shadow-lift: 0 10px 34px -18px rgba(20, 24, 31, 0.38);
   --grain-opacity: 0.5;
 
-  --measure: 720px;
-  --wide: 940px;
+  --measure: 760px;
+  --wide: 1000px;
   --radius: 14px;
   --radius-lg: 20px;
 
@@ -440,11 +440,60 @@ main.bleed { max-width: none; margin: 0; padding: 0; }
   box-shadow: var(--shadow-lift);
   border-color: #34507a;
 }
+.ref-card { cursor: zoom-in; }
 .ref-card img {
   width: 100%;
   height: auto;
   display: block;
 }
+
+/* ---------- lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(7, 13, 26, 0.86);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  animation: lb-fade 0.18s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-img {
+  max-width: min(1040px, 96vw);
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid #1e293b;
+  background: #070d1a;
+  box-shadow: var(--shadow-lift);
+  cursor: default;
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.lightbox-close:hover { transform: scale(1.08); border-color: var(--accent); }
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
 
 /* ---------- reveal-on-load animation ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -551,7 +600,7 @@ main.bleed { max-width: none; margin: 0; padding: 0; }
   height: calc(100vh - 57px);
   border: 0;
   display: block;
-  background: #070d1a;
+  background: var(--bg);
 }
 
 /* ---------- footer ---------- */
@@ -565,6 +614,13 @@ main.bleed { max-width: none; margin: 0; padding: 0; }
 }
 .site-footer p { margin: 0.35rem 0; }
 .site-footer .fine { color: var(--muted); font-style: italic; opacity: 0.85; }
+
+/* Wider reading column + slightly larger type on desktop monitors, where a
+   fixed 720px column left too much empty gutter. Mobile/tablet are untouched. */
+@media (min-width: 1200px) {
+  :root { --measure: 840px; --wide: 1120px; }
+  body { font-size: 18px; }
+}
 
 @media (max-width: 640px) {
   .card-gallery { grid-template-columns: 1fr; }

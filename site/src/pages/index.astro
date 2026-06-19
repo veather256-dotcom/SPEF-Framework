@@ -32,11 +32,11 @@ const cards = [
 
     <ul class="threelines">
       <li class="a reveal reveal-2">
-        <span class="tag">线 A · 结构</span>
+        <span class="tag">线 A · 结构性</span>
         <span class="desc">必然存在一个自动守门员永远看不见、因此无法闭合的反馈环。</span>
       </li>
       <li class="b reveal reveal-3">
-        <span class="tag">线 B · 运行</span>
+        <span class="tag">线 B · 运行性</span>
         <span class="desc">人作为闭环传感器,有效增益随负荷衰减——名义闭合、实质开环。</span>
       </li>
       <li class="c reveal reveal-4">
@@ -73,10 +73,54 @@ const cards = [
   <div class="card-gallery">
     {
       cards.map((c) => (
-        <a class="ref-card" href={c.src} target="_blank" rel="noopener" aria-label={c.title}>
+        <a class="ref-card" href={c.src} aria-label={c.title}>
           <img src={c.src} alt={c.title} loading="lazy" width="1040" height="660" />
         </a>
       ))
     }
   </div>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="关闭">×</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script is:inline>
+    (() => {
+      const gallery = document.querySelector('.card-gallery');
+      const box = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      const closeBtn = document.getElementById('lightboxClose');
+      if (!gallery || !box || !img || !closeBtn) return;
+
+      let lastFocus = null;
+      const open = (src, alt) => {
+        img.src = src;
+        img.alt = alt || '';
+        box.hidden = false;
+        document.body.style.overflow = 'hidden';
+        lastFocus = document.activeElement;
+        closeBtn.focus();
+      };
+      const close = () => {
+        box.hidden = true;
+        img.removeAttribute('src');
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      };
+
+      gallery.addEventListener('click', (e) => {
+        const card = e.target.closest('.ref-card');
+        if (!card) return;
+        e.preventDefault();
+        const im = card.querySelector('img');
+        open(card.getAttribute('href'), im ? im.alt : '');
+      });
+      closeBtn.addEventListener('click', close);
+      box.addEventListener('click', (e) => { if (e.target === box) close(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !box.hidden) close();
+      });
+    })();
+  </script>
 </Base>

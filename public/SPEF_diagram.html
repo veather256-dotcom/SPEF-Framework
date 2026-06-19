@@ -5,12 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPEF · 论证结构图</title>
 <style>
+/* Light theme — default, mirrors the site's light-first palette.
+   The host page (diagram.astro) mirrors the site theme onto this
+   document's <html data-theme>; standalone visits follow the OS. */
 :root {
+  --bg:       #fbfaf8;
+  --surface:  #ffffff;
+  --border:   #e7e4de;
+  --dim:      #aaa49a;
+  --muted:    #5b6573;
+  --formula-bg: rgba(0,0,0,0.05);
+
+  --cn: #64748b; --cn-bg: #f4f5f7; --cn-tx: #1f2937; --cn-tg: #52617a;
+  --sr: #e11d48; --sr-bg: #fff1f3; --sr-tx: #9f1239; --sr-tg: #be123c;
+  --ca: #2563eb; --ca-bg: #eff5ff; --ca-tx: #1e3a8a; --ca-tg: #1d4ed8;
+  --cb: #d9890b; --cb-bg: #fff8ea; --cb-tx: #8a4d09; --cb-tg: #b45309;
+  --cc: #0d9488; --cc-bg: #effcf9; --cc-tx: #115e59; --cc-tg: #0f766e;
+  --cv: #7c3aed; --cv-bg: #f5f1ff; --cv-tx: #5b21b6; --cv-tg: #6d28d9;
+  --co: #16a34a; --co-bg: #effdf5; --co-tx: #166534; --co-tg: #15803d;
+  --cl: #dc2626; --cl-bg: #fff1f1; --cl-tx: #991b1b; --cl-tg: #b91c1c;
+  --ck: #64748b; --ck-bg: #f4f6f8; --ck-tx: #1f2937; --ck-tg: #475569;
+
+  --ff: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  --fm: "SFMono-Regular","Menlo","Consolas","PingFang SC","Microsoft YaHei",monospace;
+}
+
+/* Dark theme — explicit toggle from the host, or OS preference on a
+   standalone visit when no explicit theme has been set. */
+:root[data-theme="dark"] {
   --bg:       #070d1a;
   --surface:  #0b1422;
   --border:   #1e293b;
   --dim:      #334155;
   --muted:    #64748b;
+  --formula-bg: rgba(0,0,0,0.35);
 
   --cn: #475569; --cn-bg: #0b1422; --cn-tx: #cbd5e1; --cn-tg: #94a3b8;
   --sr: #f43f5e; --sr-bg: #1a0010; --sr-tx: #fecdd3; --sr-tg: #f43f5e;
@@ -21,9 +49,27 @@
   --co: #34d399; --co-bg: #001409; --co-tx: #d1fae5; --co-tg: #34d399;
   --cl: #f87171; --cl-bg: #180000; --cl-tx: #fecaca; --cl-tg: #f87171;
   --ck: #64748b; --ck-bg: #0d1824; --ck-tx: #f1f5f9; --ck-tg: #94a3b8;
+}
 
-  --ff: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
-  --fm: "SFMono-Regular","Menlo","Consolas","PingFang SC","Microsoft YaHei",monospace;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg:       #070d1a;
+    --surface:  #0b1422;
+    --border:   #1e293b;
+    --dim:      #334155;
+    --muted:    #64748b;
+    --formula-bg: rgba(0,0,0,0.35);
+
+    --cn: #475569; --cn-bg: #0b1422; --cn-tx: #cbd5e1; --cn-tg: #94a3b8;
+    --sr: #f43f5e; --sr-bg: #1a0010; --sr-tx: #fecdd3; --sr-tg: #f43f5e;
+    --ca: #3b82f6; --ca-bg: #05111f; --ca-tx: #bfdbfe; --ca-tg: #60a5fa;
+    --cb: #f59e0b; --cb-bg: #150a00; --cb-tx: #fde68a; --cb-tg: #fbbf24;
+    --cc: #2dd4bf; --cc-bg: #00140f; --cc-tx: #99f6e4; --cc-tg: #2dd4bf;
+    --cv: #a78bfa; --cv-bg: #10002a; --cv-tx: #ede9fe; --cv-tg: #c084fc;
+    --co: #34d399; --co-bg: #001409; --co-tx: #d1fae5; --co-tg: #34d399;
+    --cl: #f87171; --cl-bg: #180000; --cl-tx: #fecaca; --cl-tg: #f87171;
+    --ck: #64748b; --ck-bg: #0d1824; --ck-tx: #f1f5f9; --ck-tg: #94a3b8;
+  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +98,7 @@ body {
 .header-title {
   font-size: 22px;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--cn-tg);
   letter-spacing: 0.04em;
   margin-bottom: 6px;
 }
@@ -120,7 +166,7 @@ body {
   font-family: var(--fm);
   font-size: 11px;
   line-height: 1.75;
-  background: rgba(0,0,0,0.35);
+  background: var(--formula-bg);
   border-left: 2px solid;
 }
 .node-items {
@@ -380,7 +426,7 @@ body {
   flex-wrap: wrap;
   gap: 14px 20px;
   padding: 14px 16px;
-  background: #0b1422;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 5px;
   margin-top: 20px;
@@ -390,7 +436,7 @@ body {
   align-items: center;
   gap: 7px;
   font-size: 10.5px;
-  color: #94a3b8;
+  color: var(--muted);
 }
 .legend-dot {
   width: 11px;
@@ -441,16 +487,16 @@ body {
     <div class="node-sub">三个独立的认知失灵机制同时运转，且相互叠加加剧</div>
     <div class="node-items">
       <div class="node-item">
-        <div class="node-item-head" style="color:#60a5fa;min-width:100px">① 显著性 ≠ 风险</div>
-        <div style="color:#94a3b8">注意力扑向"看起来可疑"之处，最致命故障全程亮绿灯（salience bias / WYSIATI）</div>
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">① 显著性 ≠ 风险</div>
+        <div style="color:var(--cn-tg)">注意力扑向"看起来可疑"之处，最致命故障全程亮绿灯（salience bias / WYSIATI）</div>
       </div>
       <div class="node-item">
-        <div class="node-item-head" style="color:#60a5fa;min-width:100px">② 检查无回声</div>
-        <div style="color:#94a3b8">"检查后未发现问题"与"确实无问题"体验上无法区分，永远收不到"你看漏了"的信号</div>
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">② 检查无回声</div>
+        <div style="color:var(--cn-tg)">"检查后未发现问题"与"确实无问题"体验上无法区分，永远收不到"你看漏了"的信号</div>
       </div>
       <div class="node-item">
-        <div class="node-item-head" style="color:#60a5fa;min-width:100px">③ 勤奋本身在加害</div>
-        <div style="color:#94a3b8">前两条叠加：在低风险显眼处耗尽带宽，因"已尽责"获得虚假安心</div>
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">③ 勤奋本身在加害</div>
+        <div style="color:var(--cn-tg)">前两条叠加：在低风险显眼处耗尽带宽，因"已尽责"获得虚假安心</div>
       </div>
     </div>
   </div>
@@ -462,7 +508,7 @@ body {
 <div class="node n-selfref">
   <div class="node-bar"></div>
   <div class="node-body">
-    <div class="node-sec">§1.2 · 全文轴心 <span class="node-key" style="background:rgba(244,63,94,0.15);color:#f43f5e;font-size:8.5px;padding:1px 6px;border-radius:3px;">KEY</span></div>
+    <div class="node-sec">§1.2 · 全文轴心 <span class="node-key" style="background:rgba(244,63,94,0.15);color:var(--sr);font-size:8.5px;padding:1px 6px;border-radius:3px;">KEY</span></div>
     <div class="node-title">核心困境：自指</div>
     <div class="node-sub">测量者（操作者的判断）= 被测量者（操作者）→ 当下任何自我评估在原理上不可信</div>
     <div class="node-role">↳ 后文一切论证的轴心。推论：终止条件也过这道门，须预承诺（→ §5.4 kill-switch）</div>
@@ -510,7 +556,7 @@ Conant-Ashby:
     <div class="node n-A">
       <div class="node-bar"></div>
       <div class="node-body">
-        <div class="node-sec">§3.1 · 线A-3 <span style="background:rgba(59,130,246,0.15);color:#3b82f6;font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+        <div class="node-sec">§3.1 · 线A-3 <span style="background:rgba(59,130,246,0.15);color:var(--ca);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
         <div class="node-title">P1（硬）+ P2（软）</div>
         <div class="node-sub">两步硬度不同，不可混同</div>
         <div class="node-role">↳ 建立"为什么必须有人"的结构性论证</div>
@@ -596,7 +642,7 @@ L 只能按区制读，不能线性比大小</div>
     <div class="node n-C">
       <div class="node-bar"></div>
       <div class="node-body">
-        <div class="node-sec">§3.3 · 线C-3 <span style="background:rgba(45,212,191,0.15);color:#2dd4bf;font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+        <div class="node-sec">§3.3 · 线C-3 <span style="background:rgba(45,212,191,0.15);color:var(--cc);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
         <div class="node-title">唯一的外环：时间上未来的自己</div>
         <div class="node-sub">后者已知何处出事，且不被此刻显著性偏置绑架</div>
         <div class="node-role">↳ 推出"信号必须在判断当下捕获"——不能事后补写</div>
@@ -639,7 +685,7 @@ L 只能按区制读，不能线性比大小</div>
 <div class="node n-conv">
   <div class="node-bar"></div>
   <div class="node-body">
-    <div class="node-sec">§3.5 · 元认知支架 &nbsp;<span style="background:rgba(167,139,250,0.15);color:#a78bfa;font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+    <div class="node-sec">§3.5 · 元认知支架 &nbsp;<span style="background:rgba(167,139,250,0.15);color:var(--cv);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
     <div class="node-title">瞬时预判押注</div>
     <div class="node-sub">"预判此处无误，因为___"（时间戳锁定，看到结果前落盘）</div>
     <div class="node-role">↳ 三线要求的操作化落地；其价值来自两条可独立成立的通道，承重不同、抗腐蚀性不同</div>
@@ -729,7 +775,7 @@ L 只能按区制读，不能线性比大小</div>
   <div class="node n-lim">
     <div class="node-bar"></div>
     <div class="node-body">
-      <div class="node-sec">§6 · R2 &nbsp;<span style="background:rgba(248,113,113,0.15);color:#f87171;font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+      <div class="node-sec">§6 · R2 &nbsp;<span style="background:rgba(248,113,113,0.15);color:var(--cl);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
       <div class="node-title">Confabulation（在 R1 之下，更深）</div>
       <div class="node-sub">真诚但错误的自我归因——内省通道本身不可靠（Nisbett-Wilson）；诚实不充分</div>
       <div class="node-role">↳ 精确边界：只腐蚀通道二，通道一完好 → 优雅降级为纯预测打分器，仍然有效</div>
