@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import DocToc, { slugify, type TocHeading } from '../../components/DocToc.astro';
 import { metaFor, homeHref, uiFor } from '../../lib/i18n.ts';
 
 export async function getStaticPaths() {
@@ -12,13 +13,26 @@ const { doc } = Astro.props;
 const meta = metaFor('zh', doc.id);
 const t = uiFor('zh').docs;
 const { Content } = await render(doc);
+
+// Parse headings from raw markdown body for the TOC.
+const toc: TocHeading[] = [];
+for (const m of doc.body.matchAll(/^(#{2,3})\s+(.+)$/gm)) {
+  const level = m[1].length as 2 | 3;
+  const text = m[2].trim();
+  toc.push({ id: slugify(text), text, level });
+}
 ---
 
 <Base lang="zh" title={meta.title} description={meta.blurb}>
   <div class="doc-head">
     <a class="back" href={homeHref('zh')}>{t.back}</a>
   </div>
-  <article class="prose">
-    <Content />
-  </article>
+  <div class="doc-layout">
+    <article class="prose doc-main">
+      <Content />
+    </article>
+    <aside class="doc-side">
+      <DocToc headings={toc} label="目次" />
+    </aside>
+  </div>
 </Base>

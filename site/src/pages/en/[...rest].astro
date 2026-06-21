@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Home from '../../components/Home.astro';
 import DiagramFrame from '../../components/DiagramFrame.astro';
+import DocToc, { slugify, type TocHeading } from '../../components/DocToc.astro';
 import { metaFor, homeHref, uiFor } from '../../lib/i18n.ts';
 
 export async function getStaticPaths() {
@@ -25,6 +26,16 @@ const Content = type === 'docs' ? (await render(doc)).Content : null;
 const meta = type === 'docs' ? metaFor('en', doc!.id) : null;
 const t = type === 'docs' ? uiFor('en').docs : null;
 const tDiagram = uiFor('en').diagram;
+
+// Parse headings for TOC (docs only).
+let toc: TocHeading[] = [];
+if (type === 'docs' && doc) {
+  for (const m of (doc as any).body.matchAll(/^(#{2,3})\s+(.+)$/gm)) {
+    const level = m[1].length as 2 | 3;
+    const text = m[2].trim();
+    toc.push({ id: slugify(text), text, level });
+  }
+}
 ---
 
 {type === 'home' && (
@@ -44,8 +55,13 @@ const tDiagram = uiFor('en').diagram;
     <div class="doc-head">
       <a class="back" href={homeHref('en')}>{t!.back}</a>
     </div>
-    <article class="prose">
-      <Content />
-    </article>
+    <div class="doc-layout">
+      <article class="prose doc-main">
+        <Content />
+      </article>
+      <aside class="doc-side">
+        <DocToc headings={toc} label="On this page" />
+      </aside>
+    </div>
   </Base>
 )}
