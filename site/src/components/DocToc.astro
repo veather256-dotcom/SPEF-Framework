@@ -1,12 +1,21 @@
 ---
 /**
- * DocToc — sticky table-of-contents sidebar for docs pages.
- * Accepts pre-parsed headings and renders a scroll-spy nav.
+ * DocToc — hierarchical sticky table-of-contents for docs pages.
+ *
+ * Groups h3 under their preceding h2, renders as a collapsible tree,
+ * scroll-spies with parent-highlight, extracts section numbers,
+ * flags argument-line headings (A/B/C), and switches to a FAB-triggered
+ * overlay on mobile.
  */
 export interface TocHeading {
   id: string;
   text: string;
   level: 2 | 3;
+}
+
+interface TocGroup {
+  h2: TocHeading;
+  h3s: TocHeading[];
 }
 
 interface Props {
@@ -17,36 +26,239 @@ interface Props {
 
 const { headings, label = '目次' } = Astro.props;
 
+// ── helpers ──
+
+function groupHeadings(items: TocHeading[]): TocGroup[] {
+  const groups: TocGroup[] = [];
+  let cur: TocGroup | null = null;
+  for (const h of items) {
+    if (h.level === 2) {
+      cur = { h2: h, h3s: [] };
+      groups.push(cur);
+    } else if (h.level === 3 && cur) {
+      cur.h3s.push(h);
+    }
+  }
+  return groups;
+}
+
+/** Extract leading section number like "1.2" or "2.3.1". */
+function sectionNum(text: string): string | null {
+  const m = text.match(/^(\d+(?:\.\d+)*)\s/);
+  return m ? m[1] : null;
+}
+
+/** Strip leading section number from heading text. */
+function stripNum(text: string): string {
+  return text.replace(/^\d+(?:\.\d+)*\s+/, '');
+}
+
+/** Detect argument-line tag in heading text. */
+type LineTag = 'a' | 'b' | 'c';
+function lineTag(text: string): LineTag | null {
+  if (/线\s*A|Line\s*A/i.test(text)) return 'a';
+  if (/线\s*B|Line\s*B/i.test(text)) return 'b';
+  if (/线\s*C|Line\s*C/i.test(text)) return 'c';
+  return null;
+}
+
+const LINE_NAMES: Record<LineTag, string> = { a: '线A·结构性', b: '线B·运行性', c: '线C·认识论' };
+
 /** GitHub-style slug matching rehype-slug output. */
 export function slugify(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^\w\s\u4e00-\u9fff-]/g, '') // keep CJK, alphanum, whitespace, hyphen
+    .replace(/[^\w\s\u4e00-\u9fff-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
 }
+
+const groups = groupHeadings(headings);
 ---
 
-{headings.length > 0 && (
-  <nav class="doc-toc" aria-label={label}>
-    <span class="toc-label">{label}</span>
-    <ol>
-      {headings.map((h) => (
-        <li class={`toc-item toc-l${h.level}`}>
-          <a href={`#${h.id}`} data-toc={h.id}>{h.text}</a>
-        </li>
-      ))}
-    </ol>
-  </nav>
+{groups.length > 0 && (
+  <>
+    <!-- backdrop (mobile overlay only) -->
+    <div class="toc-backdrop" id="tocBackdrop" aria-hidden="true"></div>
+
+    <nav class="doc-toc" id="docToc" aria-label={label}>
+      <div class="toc-header">
+        <span class="toc-label">{label}</span>
+        <button
+          type="button"
+          class="toc-close"
+          id="tocClose"
+          aria-label="关闭目录"
+          title="关闭目录"
+        >&times;</button>
+      </div>
+
+      <ul class="toc-tree">
+        {groups.map((g) => {
+          const num = sectionNum(g.h2.text);
+          const lt = lineTag(g.h2.text);
+          const hasKids = g.h3s.length > 0;
+          const collapsedKey = `toc-c-${g.h2.id}`;
+          return (
+            <li class="toc-group">
+              {/* h2 row */}
+              <div class="toc-row">
+                <a
+                  href={`#${g.h2.id}`}
+                  class="toc-item toc-h2"
+                  data-toc={g.h2.id}
+                  data-level="2"
+                >
+                  <span class="toc-bar" aria-hidden="true"></span>
+                  {num && <span class="toc-num">{num}</span>}
+                  <span class="toc-text">{num ? stripNum(g.h2.text) : g.h2.text}</span>
+                </a>
+                {lt && (
+                  <span class={`toc-line-dot line-${lt}`} title={LINE_NAMES[lt]} aria-label={LINE_NAMES[lt]}></span>
+                )}
+                {hasKids && (
+                  <button
+                    type="button"
+                    class="toc-toggle"
+                    aria-expanded="true"
+                    aria-label={`切换子节: ${g.h2.text}`}
+                    data-collapsed-key={collapsedKey}
+                  >
+                    <svg class="toc-chevron" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                )}
+              </div>
+
+              {/* h3 list */}
+              {hasKids && (
+                <ul class="toc-h3-list" data-collapsed-key={collapsedKey}>
+                  {g.h3s.map((h3) => {
+                    const h3num = sectionNum(h3.text);
+                    const h3lt = lineTag(h3.text);
+                    return (
+                      <li class="toc-h3-li">
+                        <div class="toc-row">
+                          <a
+                            href={`#${h3.id}`}
+                            class="toc-item toc-h3"
+                            data-toc={h3.id}
+                            data-parent={g.h2.id}
+                            data-level="3"
+                          >
+                            {h3num && <span class="toc-num">{h3num}</span>}
+                            <span class="toc-text">{h3num ? stripNum(h3.text) : h3.text}</span>
+                          </a>
+                          {h3lt && (
+                            <span class={`toc-line-dot line-${h3lt}`} title={LINE_NAMES[h3lt]} aria-label={LINE_NAMES[h3lt]}></span>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <!-- FAB (mobile only) -->
+    <button
+      type="button"
+      class="toc-fab"
+      id="tocFab"
+      aria-label={label}
+      title={label}
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="4" y1="12" x2="16" y2="12"/>
+        <line x1="4" y1="18" x2="20" y2="18"/>
+        <circle cx="19" cy="11" r="2.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
+  </>
 )}
 
 <script>
   (() => {
-    const toc = document.querySelector('.doc-toc');
+    const toc = document.getElementById('docToc') as HTMLElement | null;
+    const backdrop = document.getElementById('tocBackdrop') as HTMLElement | null;
+    const fab = document.getElementById('tocFab') as HTMLElement | null;
+    const closeBtn = document.getElementById('tocClose') as HTMLElement | null;
     if (!toc) return;
 
+    // ── overlay helpers ──
+    function isMobile() {
+      return window.matchMedia('(max-width: 1023px)').matches;
+    }
+    function openOverlay() {
+      document.body.classList.add('toc-open');
+    }
+    function closeOverlay() {
+      document.body.classList.remove('toc-open');
+    }
+
+    fab?.addEventListener('click', () => {
+      if (document.body.classList.contains('toc-open')) {
+        closeOverlay();
+      } else {
+        openOverlay();
+      }
+    });
+    backdrop?.addEventListener('click', closeOverlay);
+    closeBtn?.addEventListener('click', closeOverlay);
+
+    // ── collapse / expand ──
+    const STORAGE_KEY = 'spef-toc-collapsed';
+    let collapsed: Set<string>;
+    try {
+      collapsed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+    } catch {
+      collapsed = new Set();
+    }
+    function persist() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...collapsed])); } catch {}
+    }
+
+    const toggles = toc.querySelectorAll<HTMLButtonElement>('.toc-toggle');
+    toggles.forEach((btn) => {
+      const key = btn.dataset.collapsedKey!;
+      const list = toc.querySelector<HTMLElement>(`.toc-h3-list[data-collapsed-key="${CSS.escape(key)}"]`);
+      if (!list) return;
+
+      // restore saved state
+      if (collapsed.has(key)) {
+        list.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.add('collapsed');
+      }
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = btn.getAttribute('aria-expanded') !== 'false';
+        if (isOpen) {
+          list.style.display = 'none';
+          btn.setAttribute('aria-expanded', 'false');
+          btn.classList.add('collapsed');
+          collapsed.add(key);
+        } else {
+          list.style.display = '';
+          btn.setAttribute('aria-expanded', 'true');
+          btn.classList.remove('collapsed');
+          collapsed.delete(key);
+        }
+        persist();
+      });
+    });
+
+    // ── scroll-spy ──
     const links = toc.querySelectorAll<HTMLAnchorElement>('a[data-toc]');
     if (links.length === 0) return;
 
@@ -54,99 +266,396 @@ export function slugify(text: string): string {
     const headingEls = headingIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
-
     if (headingEls.length === 0) return;
+
+    // Build lookup: id → level
+    const headingLevel: Record<string, number> = {};
+    links.forEach((a) => {
+      headingLevel[a.dataset.toc!] = Number(a.dataset.level) || 2;
+    });
+
+    // Persist intersection entries
+    const entryMap = new Map<string, IntersectionObserverEntry>();
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the first heading that's significantly visible or the last one
-        // that's above the viewport.
-        let activeId: string | null = null;
+        for (const e of entries) {
+          entryMap.set(e.target.id, e);
+        }
 
-        // Check from top to bottom; the last heading whose top is at or above
-        // the viewport midpoint (or the first visible one) gets the highlight.
-        for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0) {
-            activeId = entry.target.id;
-            break; // first visible heading wins
+        // Sort observed entries by document position (top → bottom)
+        const sorted = headingIds
+          .map((id) => entryMap.get(id))
+          .filter(Boolean) as IntersectionObserverEntry[];
+
+        if (sorted.length === 0) return;
+
+        // Active heading: first intersecting one, or last one above viewport
+        let activeId: string | null = null;
+        const intersecting = sorted.filter((e) => e.isIntersecting);
+        if (intersecting.length > 0) {
+          activeId = intersecting[0].target.id;
+        } else {
+          const above = sorted.filter((e) => {
+            const top = e.boundingClientRect.top;
+            // Some entries may not have valid rects; guard
+            return top < 10;
+          });
+          if (above.length > 0) {
+            activeId = above[above.length - 1].target.id;
           }
         }
 
-        // Fallback: if no heading is visible, find the last one above the fold.
-        if (!activeId) {
-          const vh = window.innerHeight;
-          for (const el of [...headingEls].reverse()) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < vh * 0.3) {
-              activeId = el.id;
-              break;
+        // Current H2 section: last h2 whose top is above a small threshold
+        let currentH2Id: string | null = null;
+        const h2Entries = sorted.filter(
+          (e) => headingLevel[e.target.id] === 2
+        );
+        const h2Above = h2Entries.filter((e) => e.boundingClientRect.top < 60);
+        if (h2Above.length > 0) {
+          currentH2Id = h2Above[h2Above.length - 1].target.id;
+        }
+
+        // Apply classes
+        links.forEach((a) => {
+          const id = a.dataset.toc!;
+          const isActive = id === activeId;
+          a.classList.toggle('toc-active', isActive);
+
+          // parent-active for h2 when one of its h3 children is active
+          if (headingLevel[id] === 2) {
+            const hasActiveChild = links.some(
+              (la) =>
+                la.dataset.parent === id &&
+                la.dataset.toc === activeId
+            );
+            a.classList.toggle('toc-parent-active', hasActiveChild && !isActive);
+          }
+
+          // toc-bar accent for current H2
+          if (headingLevel[id] === 2) {
+            const bar = a.querySelector('.toc-bar');
+            if (bar) {
+              bar.classList.toggle('toc-bar-active', id === currentH2Id);
             }
           }
-        }
-
-        // Update active link.
-        links.forEach((a) => {
-          const isActive = a.dataset.toc === activeId;
-          a.classList.toggle('toc-active', isActive);
         });
       },
-      { rootMargin: '-10% 0px -70% 0px', threshold: 0 },
+      {
+        rootMargin: '-8% 0px -72% 0px',
+        threshold: [0, 0.2, 0.5, 0.8, 1],
+      },
     );
 
     headingEls.forEach((el) => observer.observe(el));
+
+    // ── smooth-scroll click interception ──
+    const HEADER_OFFSET = 80; // px — clears the sticky header
+
+    toc.addEventListener('click', (e) => {
+      const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-toc]');
+      if (!anchor) return;
+
+      e.preventDefault();
+      const id = anchor.dataset.toc!;
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      // Close mobile overlay first, then scroll
+      if (isMobile() && document.body.classList.contains('toc-open')) {
+        closeOverlay();
+        // Wait for overlay close animation, then scroll
+        setTimeout(() => {
+          scrollToTarget(target);
+          // Move focus to the heading for keyboard users
+          target.setAttribute('tabindex', '-1');
+          target.focus({ preventScroll: true });
+        }, 320);
+      } else {
+        scrollToTarget(target);
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
+    });
+
+    function scrollToTarget(el: HTMLElement) {
+      const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    // Close overlay on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('toc-open')) {
+        closeOverlay();
+        fab?.focus();
+      }
+    });
   })();
 </script>
 
 <style>
+  /* ── sidebar (desktop) ── */
   .doc-toc {
     position: sticky;
     top: 5rem;
     max-height: calc(100vh - 7rem);
     overflow-y: auto;
     padding: 0;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
   }
-  .toc-label {
-    display: block;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
+
+  .toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 0.8rem;
   }
-  .doc-toc ol {
+
+  .toc-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc-close {
+    display: none;              /* hidden on desktop */
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0 0.2rem;
+    border-radius: 6px;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .toc-close:hover {
+    color: var(--ink);
+    background: var(--surface-2);
+  }
+
+  /* ── tree ── */
+  .toc-tree {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
   }
-  .toc-item a {
-    display: block;
-    padding: 0.25rem 0.55rem;
+
+  .toc-group + .toc-group {
+    margin-top: 0.15rem;
+  }
+
+  .toc-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── shared item styles ── */
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    flex: 1;
+    min-width: 0;
+    padding: 0.3rem 0.55rem;
     border-radius: 6px;
     color: var(--muted);
     text-decoration: none;
     line-height: 1.5;
     border-left: 2px solid transparent;
     transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    position: relative;
   }
-  .toc-item a:hover {
+  .toc-item:hover {
     color: var(--ink-soft);
     background: color-mix(in srgb, var(--surface-2) 60%, transparent);
   }
-  .toc-item a.toc-active {
+
+  /* active h2/h3 */
+  .toc-item.toc-active {
     color: var(--ink);
     border-left-color: var(--accent);
     background: color-mix(in srgb, var(--accent-soft) 50%, transparent);
   }
-  .toc-l3 a { padding-left: 1.8rem; font-size: 0.94em; }
 
-  /* ---- mobile: collapse to overlay ---- */
-  @media (max-width: 1023px) {
-    .doc-toc {
-      display: none;
-    }
+  /* parent h2 when child h3 is active */
+  .toc-item.toc-parent-active {
+    color: var(--ink-soft);
+    border-left-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  /* ── h3 indent ── */
+  .toc-h3-li {
+    position: relative;
+  }
+  .toc-h3 {
+    padding-left: 2rem;
+    font-size: 0.94em;
+  }
+
+  /* ── section number ── */
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 0.8em;
+    color: var(--muted);
+    opacity: 0.7;
+    min-width: 1.6em;
+    flex-shrink: 0;
+  }
+  .toc-item:hover .toc-num,
+  .toc-item.toc-active .toc-num,
+  .toc-item.toc-parent-active .toc-num {
+    opacity: 1;
+  }
+
+  /* ── text truncation ── */
+  .toc-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ── progress bar on h2 ── */
+  .toc-bar {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    border-radius: 2px;
+    background: var(--border);
+    flex-shrink: 0;
+    margin-right: 0.35rem;
+    transition: background 0.25s ease;
+  }
+  .toc-bar.toc-bar-active {
+    background: var(--accent);
+  }
+
+  /* ── argument-line dot ── */
+  .toc-line-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 0.3rem;
+    opacity: 0.75;
+    transition: opacity 0.15s ease;
+  }
+  .toc-item:hover + .toc-line-dot,
+  .toc-row:hover .toc-line-dot {
+    opacity: 1;
+  }
+  .toc-line-dot.line-a { background: var(--line-a); }
+  .toc-line-dot.line-b { background: var(--line-b); }
+  .toc-line-dot.line-c { background: var(--line-c); }
+
+  /* ── toggle button ── */
+  .toc-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-right: 2px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .toc-toggle:hover {
+    color: var(--ink-soft);
+    background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  }
+  .toc-chevron {
+    transition: transform 0.2s ease;
+  }
+  .toc-toggle.collapsed .toc-chevron {
+    transform: rotate(-90deg);
+  }
+
+  /* ── h3 list ── */
+  .toc-h3-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+  }
+
+  /* ── tree connector line for h3 ── */
+  .toc-h3-li::before {
+    content: "";
+    position: absolute;
+    left: 1.05rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .toc-h3-li:last-child::before {
+    height: 50%;
+  }
+  .toc-h3-li .toc-item::before {
+    content: "";
+    position: absolute;
+    left: -0.95rem;
+    top: 50%;
+    width: 0.65rem;
+    height: 2px;
+    background: var(--border);
+  }
+
+  /* ── FAB (mobile only — controlled by media query in global.css) ── */
+  .toc-fab {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 48;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.15s ease;
+  }
+  .toc-fab:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-lift);
+    background: var(--surface-2);
+  }
+  .toc-fab:active {
+    transform: scale(0.96);
+  }
+
+  /* ── backdrop (mobile only) ── */
+  .toc-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+    background: rgba(7, 13, 26, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* ── scrollbar micro ── */
+  .doc-toc::-webkit-scrollbar { width: 4px; }
+  .doc-toc::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 4px;
   }
 </style>
