@@ -100,16 +100,16 @@ export const UI: Record<Lang, Ui> = {
   zh: {
     htmlLang: 'zh-CN',
     siteDescription:
-      '在低效度反馈环境中校准人类判断的工作流方法论。最危险的错误从不触发报警，自我评估在原理上不可靠，所以判断必须被外置成可证伪、带时间戳、由现实结算的痕迹。',
+      'SPEF 是一套校准人类判断的工作流。它不保证你进步，它保证每一次自欺都留下可验证、赖不掉的痕迹。',
     nav: { framework: '框架', diagram: '论证图', toggleTheme: '切换深浅色', switchLang: 'EN' },
     footer: {
-      line: 'SPEF · 在低效度反馈环境中校准人类判断的工作流方法论',
+      line: 'SPEF · 一套校准人类判断的工作流',
       fine: '它给不出"你已进步"的证明；它给每一次自欺装一份迟到、但赖不掉的账单。',
     },
     home: {
       eyebrow: 'Scan · Plan · Execute · Feedback',
-      h1: '校准低效度反馈环境中的人类判断',
-      lede: '最危险的错误从不触发报警；当下的自我评估在原理上不可信；所以判断必须被外置成可证伪、带时间戳、由现实结算的痕迹。',
+      h1: 'AI 没报错——你就做对了吗？',
+      lede: 'SPEF 是一套校准人类判断的工作流。它不保证你进步，它保证每一次自欺都留下可验证、赖不掉的痕迹。',
       phases: [
         { letter: 'S', word: 'Scan', gloss: '扫描' },
         { letter: 'P', word: 'Plan', gloss: '计划' },
@@ -145,16 +145,16 @@ export const UI: Record<Lang, Ui> = {
   en: {
     htmlLang: 'en',
     siteDescription:
-      'A workflow methodology for calibrating human judgment in low-fidelity feedback environments. The most dangerous errors never trigger alarms; self-assessment is structurally unreliable; so judgment must be externalized into falsifiable, timestamped traces settled by reality.',
+      'SPEF is a workflow for calibrating human judgment. It offers no proof that you\u2019ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
     nav: { framework: 'Framework', diagram: 'Diagram', toggleTheme: 'Toggle theme', switchLang: '中文' },
     footer: {
-      line: 'SPEF · A workflow methodology for calibrating human judgment in low-fidelity feedback environments',
+      line: 'SPEF · A workflow for calibrating human judgment',
       fine: 'It offers no proof that "you have improved"; it attaches to every act of self-deception a late but undeniable bill.',
     },
     home: {
       eyebrow: 'Scan · Plan · Execute · Feedback',
-      h1: 'Calibrating human judgment in low-fidelity feedback environments',
-      lede: 'The most dangerous errors never trigger alarms; self-assessment is structurally unreliable; so judgment must be externalized into falsifiable, timestamped traces settled by reality.',
+      h1: 'AI didn\u2019t raise an alarm \u2014 did you get it right?',
+      lede: 'SPEF is a workflow for calibrating human judgment. It offers no proof that you\u2019ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
       phases: [
         { letter: 'S', word: 'Scan' },
         { letter: 'P', word: 'Plan' },
