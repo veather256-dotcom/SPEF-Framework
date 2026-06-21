@@ -145,7 +145,7 @@ export const UI: Record<Lang, Ui> = {
   en: {
     htmlLang: 'en',
     siteDescription:
-      'SPEF is a workflow for calibrating human judgment. It offers no proof that you\u2019ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
+      'SPEF is a workflow for calibrating human judgment. It offers no proof that you\'ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
     nav: { framework: 'Framework', diagram: 'Diagram', toggleTheme: 'Toggle theme', switchLang: '中文' },
     footer: {
       line: 'SPEF · A workflow for calibrating human judgment',
@@ -153,8 +153,8 @@ export const UI: Record<Lang, Ui> = {
     },
     home: {
       eyebrow: 'Scan · Plan · Execute · Feedback',
-      h1: 'AI didn\u2019t raise an alarm \u2014 did you get it right?',
-      lede: 'SPEF is a workflow for calibrating human judgment. It offers no proof that you\u2019ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
+      h1: 'AI didn\'t raise an alarm \u2014 did you get it right?',
+      lede: 'SPEF is a workflow for calibrating human judgment. It offers no proof that you\'ve improved. It attaches to every act of self-deception a verifiable, undeniable trace.',
       phases: [
         { letter: 'S', word: 'Scan' },
         { letter: 'P', word: 'Plan' },
