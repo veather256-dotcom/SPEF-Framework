@@ -105,7 +105,7 @@
 <rect x="40" y="489" width="960" height="137" rx="10" fill="url(#foot)" stroke="#2dd4bf" stroke-width="1.2"/>
 <rect x="40" y="489" width="3" height="137" rx="1.5" fill="#2dd4bf" opacity="0.55"/>
 <text x="64" y="524" font-size="18" fill="#99f6e4">▸ 理想配置：S/P/E 交给 Agent，<tspan fill="#2dd4bf" font-weight="bold">F 留给人</tspan>。</text>
-<text x="64" y="557" font-size="18" fill="#99f6e4">▸ 核心准则：正确性不靠"某步做对"，靠<tspan fill="#2dd4bf" font-weight="bold">"这个环能否稳定闭合"</tspan>。</text>
+<text x="64" y="557" font-size="18" fill="#99f6e4">▸ 核心准则：正确性不靠「某步做对」，靠<tspan fill="#2dd4bf" font-weight="bold">「这个环能否稳定闭合」</tspan>。</text>
 <text x="64" y="590" font-size="18" fill="#99f6e4">▸ <tspan fill="#2dd4bf" font-weight="bold">只闭那个只有人能闭的环</tspan>，其余交给编译器/测试。</text>
 <text x="64" y="617" font-size="16" fill="#2a4040">▸ S/P 交织处 = 双高节点（高耦合 × 高不可观）= 最该押注处。</text>
 </svg>

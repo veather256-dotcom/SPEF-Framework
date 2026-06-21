@@ -71,7 +71,7 @@
 <!-- Template box -->
 <rect x="40" y="126" width="960" height="152" rx="12" fill="url(#tplBox)" stroke="#f59e0b" stroke-width="2"/>
 <rect x="40" y="126" width="4" height="152" rx="2" fill="#f59e0b" opacity="0.7"/>
-<text x="64" y="162" font-size="18" fill="#94a3b8">押一个高风险点"应该没问题"的当下，写：</text>
+<text x="64" y="162" font-size="18" fill="#94a3b8">押一个高风险点「应该没问题」的当下，写：</text>
 <text x="520" y="212" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">「预判此处无误，因为 ___」</text>
 <text x="520" y="255" font-size="18.5" fill="#fde68a" text-anchor="middle">写成赖不掉的硬陈述 →「看结果前」带时间戳落盘（git 提交）</text>
 
@@ -101,7 +101,7 @@
 <!-- Channel 2 - violet -->
 <rect x="535" y="386" width="465" height="152" rx="10" fill="url(#ch2)" stroke="#a78bfa" stroke-width="1.5"/>
 <rect x="535" y="386" width="3" height="152" rx="1.5" fill="#a78bfa" opacity="0.7"/>
-<text x="559" y="421" font-size="21" fill="#c084fc" font-weight="bold">通道二　写"因为"</text>
+<text x="559" y="421" font-size="21" fill="#c084fc" font-weight="bold">通道二　写「因为」</text>
 <text x="559" y="453" font-size="17" fill="#ede9fe">靠 self-explanation 暴露裂缝。</text>
 <text x="559" y="481" font-size="17" fill="#ede9fe">confabulation 严重时失效。</text>
 <text x="559" y="516" font-size="18" fill="#a78bfa" font-weight="bold">→ 锦上添花</text>
@@ -109,6 +109,6 @@
 <!-- Warning box -->
 <rect x="40" y="552" width="960" height="76" rx="10" fill="url(#warn)" stroke="#f43f5e" stroke-width="1.2"/>
 <rect x="40" y="552" width="3" height="76" rx="1.5" fill="#f43f5e" opacity="0.8"/>
-<text x="64" y="584" font-size="17.5" fill="#fecdd3">⚠ 别用"两个一致的因为"去抓 confabulation——会奖励最会圆话的人。</text>
-<text x="64" y="612" font-size="17.5" fill="#fda4af">　两个"因为"的真正用途：扩大可证伪面、提升分辨力。</text>
+<text x="64" y="584" font-size="17.5" fill="#fecdd3">⚠ 别用「两个一致的因为」去抓 confabulation——会奖励最会圆话的人。</text>
+<text x="64" y="612" font-size="17.5" fill="#fda4af">　两个「因为」的真正用途：扩大可证伪面、提升分辨力。</text>
 </svg>

@@ -5,7 +5,7 @@
 
 ---
 
-## ① SPEF Four-Stage Boundaries  [Handbook §2.1]
+## 1. SPEF Four-Stage Boundaries  [Handbook §2.1]
 
 | Stage | Do this | **Do not do this** |
 |---|---|---|
@@ -21,7 +21,7 @@
 
 ---
 
-## ② Instantaneous Prediction Wager Template  [Handbook §2.2]
+## 2. Instantaneous Prediction Wager Template  [Handbook §2.2]
 
 > At the moment you are wagering on a high-risk point "should be fine," write:
 >
@@ -40,7 +40,7 @@
 
 ---
 
-## ③ Wagering Criterion L Three-Regime  [Handbook §2.3]
+## 3. Wagering Criterion L Three-Regime  [Handbook §2.3]
 
 $$L = \dfrac{R_L\ (\text{true risk proportion covered})}{\phi\ (\text{subjective wager coverage estimate})}$$
 
@@ -56,7 +56,7 @@ $$L = \dfrac{R_L\ (\text{true risk proportion covered})}{\phi\ (\text{subjective
 
 ---
 
-## ④ Red Lines and Termination Conditions  [Handbook §2.5]
+## 4. Red Lines and Termination Conditions  [Handbook §2.5]
 
 **Lock three items before start; retroactive change forbidden**:
 

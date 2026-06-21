@@ -148,9 +148,9 @@ Operating rules for breaking the salience trap:
 - **What to wager on**: dual-high nodes = high coupling (output feeds next Scan) × high unobservability (distortion is invisible to inner loop). The S/P junction is the canonical example.
 - **What not to wager on**: outsource to compilers/tests/type checkers (tireless cheap sensors). **Do not average.**
 - **Self-check with L three-regime rule** (read after period aggregation, not per-instance):
-  - $L>1$　wagered correctly — limited bandwidth truly concentrated on high-risk.
-  - $L\approx1$　rubber stamp — independent of risk, includes "full-coverage expensive averaging."
-  - $L<1$　**salience trap** — only watching places where nothing breaks; diligence backfires. An attractor requiring vigilance.
+  - $L>1$ wagered correctly — limited bandwidth truly concentrated on high-risk.
+  - $L\approx1$ rubber stamp — independent of risk, includes "full-coverage expensive averaging."
+  - $L<1$ **salience trap** — only watching places where nothing breaks; diligence backfires. An attractor requiring vigilance.
 
 **Shallow/deep triage** (see Appendix B): wager intuition heavily on shallow problems (losses are cheap); move deep problems to scanning early (deep bugs are not salient; intuition has lowest hit rate). **Most dangerous case**: scanning takes far longer than predicted, yet probability does not rise → bug is outside the boundary → jump out and rescan the boundary assumptions themselves.
 

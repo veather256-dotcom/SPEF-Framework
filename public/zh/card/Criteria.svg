@@ -117,6 +117,6 @@
 <rect x="535" y="466" width="3" height="162" rx="1.5" fill="#f43f5e" opacity="0.55"/>
 <text x="559" y="501" font-size="20" fill="#fb7185" font-weight="bold">最危险信号</text>
 <text x="559" y="535" font-size="18" fill="#fecdd3">扫得远超预期、概率却不升</text>
-<text x="559" y="567" font-size="18" fill="#fecdd3">→ 不是"还没扫够"</text>
+<text x="559" y="567" font-size="18" fill="#fecdd3">→ 不是「还没扫够」</text>
 <text x="559" y="601" font-size="18" fill="#f43f5e" font-weight="bold">→ bug 在边界外，跳出去重扫边界</text>
 </svg>
