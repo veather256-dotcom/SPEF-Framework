@@ -4,6 +4,7 @@ private/
 # Local-only infrastructure (never publish)
 CLAUDE.md
 LAYERING.md
+.claude/
 
 # Node / Astro (site/)
 node_modules/
@@ -11,9 +12,10 @@ site/node_modules/
 site/dist/
 site/.astro/
 
-# generated static mirror
+# generated static mirror (per-locale, synced by scripts/sync-static.mjs)
 site/public/diagram.html
 site/public/card/
+site/public/en/
 
 .DS_Store
 .env

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPEF · Argument Structure Diagram</title>
+<style>
+/* Light theme — default, mirrors the site's light-first palette.
+   The host page (diagram.astro) mirrors the site theme onto this
+   document's <html data-theme>; standalone visits follow the OS. */
+:root {
+  --bg:       #fbfaf8;
+  --surface:  #ffffff;
+  --border:   #e7e4de;
+  --dim:      #aaa49a;
+  --muted:    #5b6573;
+  --formula-bg: rgba(0,0,0,0.05);
+
+  --cn: #64748b; --cn-bg: #f4f5f7; --cn-tx: #1f2937; --cn-tg: #52617a;
+  --sr: #e11d48; --sr-bg: #fff1f3; --sr-tx: #9f1239; --sr-tg: #be123c;
+  --ca: #2563eb; --ca-bg: #eff5ff; --ca-tx: #1e3a8a; --ca-tg: #1d4ed8;
+  --cb: #d9890b; --cb-bg: #fff8ea; --cb-tx: #8a4d09; --cb-tg: #b45309;
+  --cc: #0d9488; --cc-bg: #effcf9; --cc-tx: #115e59; --cc-tg: #0f766e;
+  --cv: #7c3aed; --cv-bg: #f5f1ff; --cv-tx: #5b21b6; --cv-tg: #6d28d9;
+  --co: #16a34a; --co-bg: #effdf5; --co-tx: #166534; --co-tg: #15803d;
+  --cl: #dc2626; --cl-bg: #fff1f1; --cl-tx: #991b1b; --cl-tg: #b91c1c;
+  --ck: #64748b; --ck-bg: #f4f6f8; --ck-tx: #1f2937; --ck-tg: #475569;
+
+  --ff: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --fm: "SFMono-Regular","Menlo","Consolas",ui-monospace,monospace;
+}
+
+/* Dark theme — explicit toggle from the host, or OS preference on a
+   standalone visit when no explicit theme has been set. */
+:root[data-theme="dark"] {
+  --bg:       #070d1a;
+  --surface:  #0b1422;
+  --border:   #1e293b;
+  --dim:      #334155;
+  --muted:    #64748b;
+  --formula-bg: rgba(0,0,0,0.35);
+
+  --cn: #475569; --cn-bg: #0b1422; --cn-tx: #cbd5e1; --cn-tg: #94a3b8;
+  --sr: #f43f5e; --sr-bg: #1a0010; --sr-tx: #fecdd3; --sr-tg: #f43f5e;
+  --ca: #3b82f6; --ca-bg: #05111f; --ca-tx: #bfdbfe; --ca-tg: #60a5fa;
+  --cb: #f59e0b; --cb-bg: #150a00; --cb-tx: #fde68a; --cb-tg: #fbbf24;
+  --cc: #2dd4bf; --cc-bg: #00140f; --cc-tx: #99f6e4; --cc-tg: #2dd4bf;
+  --cv: #a78bfa; --cv-bg: #10002a; --cv-tx: #ede9fe; --cv-tg: #c084fc;
+  --co: #34d399; --co-bg: #001409; --co-tx: #d1fae5; --co-tg: #34d399;
+  --cl: #f87171; --cl-bg: #180000; --cl-tx: #fecaca; --cl-tg: #f87171;
+  --ck: #64748b; --ck-bg: #0d1824; --ck-tx: #f1f5f9; --ck-tg: #94a3b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg:       #070d1a;
+    --surface:  #0b1422;
+    --border:   #1e293b;
+    --dim:      #334155;
+    --muted:    #64748b;
+    --formula-bg: rgba(0,0,0,0.35);
+
+    --cn: #475569; --cn-bg: #0b1422; --cn-tx: #cbd5e1; --cn-tg: #94a3b8;
+    --sr: #f43f5e; --sr-bg: #1a0010; --sr-tx: #fecdd3; --sr-tg: #f43f5e;
+    --ca: #3b82f6; --ca-bg: #05111f; --ca-tx: #bfdbfe; --ca-tg: #60a5fa;
+    --cb: #f59e0b; --cb-bg: #150a00; --cb-tx: #fde68a; --cb-tg: #fbbf24;
+    --cc: #2dd4bf; --cc-bg: #00140f; --cc-tx: #99f6e4; --cc-tg: #2dd4bf;
+    --cv: #a78bfa; --cv-bg: #10002a; --cv-tx: #ede9fe; --cv-tg: #c084fc;
+    --co: #34d399; --co-bg: #001409; --co-tx: #d1fae5; --co-tg: #34d399;
+    --cl: #f87171; --cl-bg: #180000; --cl-tx: #fecaca; --cl-tg: #f87171;
+    --ck: #64748b; --ck-bg: #0d1824; --ck-tx: #f1f5f9; --ck-tg: #94a3b8;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ck-tx);
+  font-family: var(--ff);
+  padding: 40px 32px 80px;
+  min-width: 900px;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cn-tg);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.header-sub {
+  font-size: 12px;
+  color: var(--dim);
+  font-family: var(--fm);
+  letter-spacing: 0.06em;
+}
+
+/* ── Node card ───────────────────────────────────────── */
+.node {
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+.node-bar {
+  width: 5px;
+  flex-shrink: 0;
+}
+.node-body {
+  flex: 1;
+  padding: 12px 16px 13px;
+}
+.node-sec {
+  font-family: var(--fm);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.node-key {
+  font-family: var(--fm);
+  font-size: 8.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+}
+.node-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 4px;
+}
+.node-sub {
+  font-size: 11.5px;
+  line-height: 1.6;
+  margin-bottom: 4px;
+  opacity: 0.82;
+}
+.node-role {
+  font-size: 10.5px;
+  font-style: italic;
+  opacity: 0.75;
+  margin-top: 3px;
+}
+.node-formula {
+  margin-top: 8px;
+  padding: 8px 11px;
+  border-radius: 4px;
+  font-family: var(--fm);
+  font-size: 11px;
+  line-height: 1.75;
+  background: var(--formula-bg);
+  border-left: 2px solid;
+}
+.node-items {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.node-item {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.node-item-head {
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Color themes for nodes */
+.n-neutral { background: var(--cn-bg); }
+.n-neutral .node-bar { background: var(--cn); }
+.n-neutral .node-sec { color: var(--cn-tg); }
+.n-neutral .node-title { color: var(--cn-tx); }
+.n-neutral .node-sub  { color: var(--cn-tg); }
+.n-neutral .node-role { color: var(--cn); }
+.n-neutral .node-formula { color: var(--cn-tg); border-color: rgba(71,85,105,0.4); }
+
+.n-selfref { background: var(--sr-bg); }
+.n-selfref .node-bar { background: var(--sr); }
+.n-selfref .node-sec { color: var(--sr-tg); }
+.n-selfref .node-title { color: var(--sr-tx); }
+.n-selfref .node-sub  { color: var(--sr-tg); }
+.n-selfref .node-role { color: var(--sr); }
+.n-selfref .node-key  { background: rgba(244,63,94,0.15); color: var(--sr); }
+.n-selfref .node-formula { color: var(--sr-tg); border-color: rgba(244,63,94,0.35); }
+
+.n-A { background: var(--ca-bg); }
+.n-A .node-bar { background: var(--ca); }
+.n-A .node-sec { color: var(--ca-tg); }
+.n-A .node-title { color: var(--ca-tx); }
+.n-A .node-sub  { color: var(--ca-tg); }
+.n-A .node-role { color: var(--ca); }
+.n-A .node-key  { background: rgba(59,130,246,0.15); color: var(--ca); }
+.n-A .node-formula { color: var(--ca-tg); border-color: rgba(59,130,246,0.35); }
+
+.n-B { background: var(--cb-bg); }
+.n-B .node-bar { background: var(--cb); }
+.n-B .node-sec { color: var(--cb-tg); }
+.n-B .node-title { color: var(--cb-tx); }
+.n-B .node-sub  { color: var(--cb-tg); }
+.n-B .node-role { color: var(--cb); }
+.n-B .node-key  { background: rgba(245,158,11,0.15); color: var(--cb); }
+.n-B .node-formula { color: var(--cb-tg); border-color: rgba(245,158,11,0.35); }
+
+.n-C { background: var(--cc-bg); }
+.n-C .node-bar { background: var(--cc); }
+.n-C .node-sec { color: var(--cc-tg); }
+.n-C .node-title { color: var(--cc-tx); }
+.n-C .node-sub  { color: var(--cc-tg); }
+.n-C .node-role { color: var(--cc); }
+.n-C .node-key  { background: rgba(45,212,191,0.15); color: var(--cc); }
+.n-C .node-formula { color: var(--cc-tg); border-color: rgba(45,212,191,0.35); }
+
+.n-conv { background: var(--cv-bg); }
+.n-conv .node-bar { background: var(--cv); }
+.n-conv .node-sec { color: var(--cv-tg); }
+.n-conv .node-title { color: var(--cv-tx); }
+.n-conv .node-sub  { color: var(--cv-tg); }
+.n-conv .node-role { color: var(--cv); }
+.n-conv .node-key  { background: rgba(167,139,250,0.15); color: var(--cv); }
+
+.n-ops { background: var(--co-bg); }
+.n-ops .node-bar { background: var(--co); }
+.n-ops .node-sec { color: var(--co-tg); }
+.n-ops .node-title { color: var(--co-tx); }
+.n-ops .node-sub  { color: var(--co-tg); }
+.n-ops .node-role { color: var(--co); }
+
+.n-lim { background: var(--cl-bg); }
+.n-lim .node-bar { background: var(--cl); }
+.n-lim .node-sec { color: var(--cl-tg); }
+.n-lim .node-title { color: var(--cl-tx); }
+.n-lim .node-sub  { color: var(--cl-tg); }
+.n-lim .node-role { color: var(--cl); }
+.n-lim .node-key  { background: rgba(248,113,113,0.15); color: var(--cl); }
+.n-lim .node-formula { color: var(--cl-tg); border-color: rgba(248,113,113,0.35); }
+
+.n-concl { background: var(--ck-bg); }
+.n-concl .node-bar { background: var(--ck); }
+.n-concl .node-sec { color: var(--ck-tg); }
+.n-concl .node-title { color: var(--ck-tx); }
+.n-concl .node-sub  { color: var(--ck-tg); }
+.n-concl .node-role { color: var(--ck); }
+.n-concl .node-formula { color: var(--ck-tg); border-color: rgba(100,116,139,0.4); }
+
+/* ── Arrows ──────────────────────────────────────────── */
+.arr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+}
+.arr-line {
+  width: 1px;
+  height: 18px;
+  background: var(--dim);
+}
+.arr-head {
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1;
+}
+.arr-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* ── Section divider ─────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 8px;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.divider-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Three-lane layout ───────────────────────────────── */
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.lane {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.lane-header {
+  font-family: var(--fm);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid;
+}
+.lane-header.lh-A { color: var(--ca-tg); border-color: rgba(59,130,246,0.3); }
+.lane-header.lh-B { color: var(--cb-tg); border-color: rgba(245,158,11,0.3); }
+.lane-header.lh-C { color: var(--cc-tg); border-color: rgba(45,212,191,0.3); }
+
+.lane-arr {
+  display: flex;
+  justify-content: center;
+  padding: 3px 0;
+}
+.lane-arr-A { color: rgba(59,130,246,0.5); font-size: 11px; }
+.lane-arr-B { color: rgba(245,158,11,0.5); font-size: 11px; }
+.lane-arr-C { color: rgba(45,212,191,0.5); font-size: 11px; }
+
+/* ── Two-col layout ──────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+/* ── Four-col layout ─────────────────────────────────── */
+.four-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+/* ── Convergence arrow (fan-in) ──────────────────────── */
+.fan-arr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0 2px;
+}
+.fan-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.fan-visual {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  margin-bottom: 0;
+}
+.fan-line {
+  width: 1px;
+  background: var(--dim);
+  height: 20px;
+}
+.fan-line.outer {
+  transform-origin: bottom center;
+}
+.fan-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fan-hline {
+  height: 1px;
+  width: 66%;
+  background: var(--dim);
+}
+.fan-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fan-drop .arr-line { height: 14px; }
+
+/* ── Section col label (ops, limits) ────────────────── */
+.section-tag {
+  text-align: center;
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ── Legend ──────────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.legend-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  margin-top: 24px;
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── Header ────────────────────────────────────────────── -->
+<div class="header">
+  <div class="header-title">SPEF · Argument Structure Diagram</div>
+  <div class="header-sub">What each box does &nbsp;·&nbsp; From "why it's hard" to "what we conclude"</div>
+</div>
+
+<!-- ── Starting point ────────────────────────────────────── -->
+<div class="node n-neutral">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§1.1 · Starting point</div>
+    <div class="node-title">Why is optimizing Agent workflows so difficult?</div>
+    <div class="node-sub">Lack of a standard of acceptance independent of the operator's subjective judgment</div>
+    <div class="node-role">↳ Problem statement: the most dangerous errors stay green the whole time, never trigger any automatic alarm</div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">causes</div></div>
+
+<!-- ── Three blind spots ──────────────────────────────── -->
+<div class="node n-neutral">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§1.1 · Amplification mechanism</div>
+    <div class="node-title">Three blind spots compound</div>
+    <div class="node-sub">Three independent cognitive failure mechanisms running simultaneously, mutually amplifying</div>
+    <div class="node-items">
+      <div class="node-item">
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">① Salience ≠ risk</div>
+        <div style="color:var(--cn-tg)">Attention rushes to "looks suspicious" places; deadliest failures stay green (salience bias / WYSIATI)</div>
+      </div>
+      <div class="node-item">
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">② Inspected: no echo</div>
+        <div style="color:var(--cn-tg)">"Checked, found nothing" and "actually fine" are subjectively indistinguishable; operator never gets "you missed it"</div>
+      </div>
+      <div class="node-item">
+        <div class="node-item-head" style="color:var(--ca-tg);min-width:100px">③ Diligence backfires</div>
+        <div style="color:var(--cn-tg)">First two compound: exhaust bandwidth on low-risk conspicuous places, miss high-risk hidden places, get false confidence</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">constitute jointly</div></div>
+
+<!-- ── Self-reference ────────────────────────────────── -->
+<div class="node n-selfref">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§1.2 · Book's pivot <span class="node-key" style="background:rgba(244,63,94,0.15);color:var(--sr);font-size:8.5px;padding:1px 6px;border-radius:3px;">KEY</span></div>
+    <div class="node-title">The core dilemma: self-reference</div>
+    <div class="node-sub">Measurer (your judgment) = thing measured (you) → any present self-assessment is structurally unreliable</div>
+    <div class="node-role">↳ Pivot of all later argument. Consequence: termination conditions also pass through this gate; must be pre-committed (→ §2.5 kill-switch)</div>
+  </div>
+</div>
+
+<!-- ── Three-line fork ──────────────────────────────── -->
+<div class="divider" style="margin-top:18px;">
+  <div class="divider-line"></div>
+  <div class="divider-label">§1.3-1.6 · Three parallel formal proofs; §1.7 converge</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ── Three-column layout ──────────────────────────────– -->
+<div class="three-col">
+
+  <!-- Lane A -->
+  <div class="lane">
+    <div class="lane-header lh-A">Line A · Structural (control theory)</div>
+    <div class="node n-A">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.4 · Line A-1</div>
+        <div class="node-title">Scan-layer distortion</div>
+        <div class="node-sub">Deadliest errors buried in modeling distortion of the task's true state</div>
+        <div class="node-role">↳ Locates the problem layer; compilers/tests cannot guard semantic distortion</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-A">▼</span></div>
+    <div class="node n-A">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.4 · Line A-2</div>
+        <div class="node-title">ker H + Conant–Ashby</div>
+        <div class="node-sub">Distortion falls in unobservable subspace → no error signal → uncorrectable</div>
+        <div class="node-role">↳ Formalizes "why automatic gatekeepers cannot see"</div>
+        <div class="node-formula">x ∈ ker H
+=> no error signal, uncorrectable
+Conant–Ashby:
+  model error => regulator fails
+  (no matter how correct Plan/Execute are)</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-A">▼</span></div>
+    <div class="node n-A">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.4 · Line A-3 <span style="background:rgba(59,130,246,0.15);color:var(--ca);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+        <div class="node-title">P1 (hard) + P2 (soft)</div>
+        <div class="node-sub">Two steps, different strengths, must not be conflated</div>
+        <div class="node-role">↳ Establishes structural proof "why humans must participate"</div>
+        <div class="node-formula">P1 (conditionally hard, binds L1+L2+M1+M2):
+  Loop must exist that auto gatekeepers
+  cannot close
+P2 (soft, stacks E2, marked "current"):
+  Currently only humans can offload it
+  ← Can be overturned by new sensor</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lane B -->
+  <div class="lane">
+    <div class="lane-header lh-B">Line B · Operational (cognitive science)</div>
+    <div class="node n-B">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.5 · Line B-1</div>
+        <div class="node-title">Human as sensor: gain degradation</div>
+        <div class="node-sub">Vigilance decrement (not ego depletion, which has collapsed)</div>
+        <div class="node-role">↳ Explains why human closing this loop also fails; rubber-stamp: nominally closed, actually open</div>
+        <div class="node-formula">g(load) → 0
+=> nominally closed, actually open
+Error continues produced but multiplied
+by gain approaching zero</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-B">▼</span></div>
+    <div class="node n-B">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.5 · Line B-2</div>
+        <div class="node-title">Formula L: wager quality metric</div>
+        <div class="node-sub">Not "did you hit"; rather: did your bandwidth allocation truly concentrate on high-risk</div>
+        <div class="node-role">↳ Formalizes "how to allocate finite bandwidth"; uses ratio not difference</div>
+        <div class="node-formula">L = R_L / φ
+  R_L = true risk proportion covered
+  φ  = subjective wager coverage estimate
+
+L > 1  wagered correctly (risk outpaces coverage)
+L ≈ 1  rubber stamp (costly averaging)
+L < 1  salience trap
+L readable only by regime, not linear magnitude</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-B">▼</span></div>
+    <div class="node n-B">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.5 · Line B-3</div>
+        <div class="node-title">L&lt;1 is an attractor</div>
+        <div class="node-sub">High-risk nodes precisely have low salience appearance — formal consequence of salience bias</div>
+        <div class="node-role">↳ "Harder work" cannot solve it; L is fundamentally a resolution metric</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lane C -->
+  <div class="lane">
+    <div class="lane-header lh-C">Line C · Epistemic (cognitive science)</div>
+    <div class="node n-C">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.6 · Line C-1</div>
+        <div class="node-title">Subject cannot see own bias</div>
+        <div class="node-sub">Bias blind spot: can recognize others' biases; systematically underestimate your own</div>
+        <div class="node-role">↳ Closes "introspection self-check" escape route; subject cannot see themselves in L&lt;1 attractor</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-C">▼</span></div>
+    <div class="node n-C">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.6 · Line C-2</div>
+        <div class="node-title">Self-calibration impossible in principle</div>
+        <div class="node-sub">Nelson–Narens: monitoring and control are the same entity; zero range difference</div>
+        <div class="node-role">↳ Reframes problem from control-theory observability to metacognition (§1.8)</div>
+      </div>
+    </div>
+    <div class="lane-arr"><span class="lane-arr-C">▼</span></div>
+    <div class="node n-C">
+      <div class="node-bar"></div>
+      <div class="node-body">
+        <div class="node-sec">§1.6 · Line C-3 <span style="background:rgba(45,212,191,0.15);color:var(--cc);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+        <div class="node-title">Only outer loop: future self in time</div>
+        <div class="node-sub">Your future self knows where things went wrong, not held hostage by present salience bias</div>
+        <div class="node-role">↳ Yields "signal must be captured at moment of judgment" — cannot post-write</div>
+        <div class="node-formula">Hindsight bias (post hoc rewrites as "knew all along")
++ Memory is reconstruction, not retrieval (fast decay)
+=> Signal must capture at moment of judgment
+   Post-hoc post-write = void</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Convergence ──────────────────────────────────────– -->
+<div style="display:flex;flex-direction:column;align-items:center;padding:8px 0 4px;">
+  <div style="display:flex;width:66%;justify-content:space-between;align-items:flex-end;">
+    <div style="width:1px;height:18px;background:var(--dim);margin-left:16.5%"></div>
+    <div style="width:1px;height:18px;background:var(--dim);"></div>
+    <div style="width:1px;height:18px;background:var(--dim);margin-right:16.5%"></div>
+  </div>
+  <div style="height:1px;width:66%;background:var(--dim);"></div>
+  <div style="height:18px;width:1px;background:var(--dim);"></div>
+  <div style="color:var(--dim);font-size:13px;line-height:1;">▼</div>
+  <div style="font-family:var(--fm);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">§1.7 · Three lines converge</div>
+</div>
+
+<!-- ── Convergence node ──────────────────────────────── -->
+<div class="node n-conv">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§1.7 · Intersection of three requirements</div>
+    <div class="node-title">A: human must participate · B: wager not average · C: capture at moment</div>
+    <div class="node-sub">Three lines' conclusions exactly specify the constraints the closing action must satisfy</div>
+    <div class="node-role">↳ Shows instantaneous prediction wager is not arbitrary design, but necessary consequence of three lines</div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">operationalize to</div></div>
+
+<!-- ── Instantaneous prediction wager ────────────────── -->
+<div class="node n-conv">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§2.2 · Metacognitive scaffold &nbsp;<span style="background:rgba(167,139,250,0.15);color:var(--cv);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+    <div class="node-title">Instantaneous prediction wager</div>
+    <div class="node-sub">"I predict this is correct because___" (timestamp-lock before results)</div>
+    <div class="node-role">↳ Operationalization of three-line requirements; value comes from two independent channels with different load-capacity and corruption resistance</div>
+  </div>
+</div>
+
+<!-- ── Two channels ───────────────────────────────────── -->
+<div style="text-align:center;font-family:var(--fm);font-size:9px;color:var(--cv-tg);letter-spacing:0.1em;text-transform:uppercase;margin:8px 0 6px;">Two independent value channels — different load-capacity, different corruption resistance</div>
+<div class="two-col">
+  <div class="node n-ops">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">Channel One · Brier / Tetlock component</div>
+      <div class="node-title">Prediction—settlement</div>
+      <div class="node-sub">Effectiveness depends only on wager existence and falsifiability, not on "because ___" being true cause</div>
+      <div class="node-role">↳ Regardless of confabulation severity, this channel intact ✓; reality settles; confabulation cannot corrupt</div>
+    </div>
+  </div>
+  <div class="node n-lim">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">Channel Two · self-explanation</div>
+      <div class="node-title">Writing "because" exposes cracks</div>
+      <div class="node-sub">Forced externalization of mental model before results; requires stated reason genuinely linked to true model</div>
+      <div class="node-role">↳ Confabulation's precise attack surface ✗; real value is expanding falsifiability, not resisting confabulation</div>
+    </div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">operationalize to</div></div>
+
+<!-- ── Operations layer ───────────────────────────────── -->
+<div class="section-tag">§2 + §2.5 · Operations layer</div>
+<div class="four-col">
+  <div class="node n-ops">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§2.1</div>
+      <div class="node-title">SPEF four-stage</div>
+      <div class="node-sub">S→P→E→F functional division, not temporal; F requires human participation</div>
+      <div class="node-role">↳ Makes work decomposable, error-locatable; S/P junction is dual-high node (coupling + unobservability)</div>
+    </div>
+  </div>
+  <div class="node n-ops">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§2.4</div>
+      <div class="node-title">Dead/live variable separation</div>
+      <div class="node-sub">Dead: timestamps, commits (zero judgment, auto-logged); Live: wagers+confidence (bears E5); lock three items before start</div>
+      <div class="node-role">↳ Divorces "is this an error" judgment from present self-assessment; wagers must timestamp before results</div>
+    </div>
+  </div>
+  <div class="node n-ops">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§2.4</div>
+      <div class="node-title">Degeneration-prevention mirror</div>
+      <div class="node-sub">Censoring awareness, one-way use, shows only "no degradation," rarely "progress"</div>
+      <div class="node-role">↳ Needs resolution second-axis (L is entry); deduct difficulty drift; never positive-reinforce uninformative signal</div>
+    </div>
+  </div>
+  <div class="node n-ops">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§2.5</div>
+      <div class="node-title">Kill-switch</div>
+      <div class="node-sub">Pre-commit, lock before start, execute mechanically at time, no present re-negotiation</div>
+      <div class="node-role">↳ Direct consequence of self-reference conclusion: termination power does not go to present-tense you; honest method contains its own termination</div>
+    </div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">but must acknowledge</div></div>
+
+<!-- ── Limits ──────────────────────────────────────────── -->
+<div class="section-tag">§3 · Boundaries and unproofable gaps</div>
+<div class="two-col">
+  <div class="node n-lim">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§3 · R1</div>
+      <div class="node-title">Honesty's infinite regress</div>
+      <div class="node-sub">Verifying honesty requires perspective more honest than auditee; infinite regress</div>
+      <div class="node-role">↳ Mitigation: replace with objective traces where possible; unmitigable remainder binds E5; declared unproofable</div>
+    </div>
+  </div>
+  <div class="node n-lim">
+    <div class="node-bar"></div>
+    <div class="node-body">
+      <div class="node-sec">§3 · R2 &nbsp;<span style="background:rgba(248,113,113,0.15);color:var(--cl);font-size:8.5px;padding:1px 6px;border-radius:3px;font-family:var(--fm)">KEY</span></div>
+      <div class="node-title">Confabulation (deeper than R1)</div>
+      <div class="node-sub">Sincere but false self-attribution — introspective access is unreliable (Nisbett–Wilson); honesty is insufficient</div>
+      <div class="node-role">↳ Precisely located: corrupts Channel Two only; Channel One intact → graceful degradation to pure prediction scorer, still effective</div>
+    </div>
+  </div>
+</div>
+
+<div class="arr"><div class="arr-line"></div><div class="arr-head">▼</div><div class="arr-label">therefore</div></div>
+
+<!-- ── Conclusion ──────────────────────────────────────── -->
+<div class="node n-concl">
+  <div class="node-bar"></div>
+  <div class="node-body">
+    <div class="node-sec">§3 · Conclusion</div>
+    <div class="node-title">Establishes conditional proposition</div>
+    <div class="node-sub">"If empirical premises hold → efficiency gains" ≠ "efficiency gains" · Logical self-consistency is a low hurdle you pass; says nothing about empirical premises</div>
+    <div class="node-role">↳ Real largest risk: discipline drift, not logical error. On the witness stand sits the human, not the logic</div>
+    <div class="node-formula">"It does not eliminate human illusion;
+it appends an overdue but unchallengeable bill.
+
+Make every act of self-deception more expensive,
+harder, more easily punctured by future reality."</div>
+  </div>
+</div>
+
+<!-- ── Legend ──────────────────────────────────────────── -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ca)"></div>Line A control theory · structural (ker H, Conant–Ashby)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cb)"></div>Line B cognitive science · operational (vigilance decrement, formula L)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cc)"></div>Line C cognitive science · epistemic (metacognition, hindsight bias)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cv)"></div>Convergence / Proposition / Instantaneous wager</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--co)"></div>Operations layer (SPEF, verification, degeneration mirror, kill-switch)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cl)"></div>Boundaries / gaps (R1 honesty regress, R2 confabulation)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ck)"></div>Conclusion (conditional proposition)</div>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────── -->
+<div class="footer">SPEF: Calibrating Human Judgment in Agent Workflows &nbsp;·&nbsp; v6</div>
+
+</div><!-- /page -->
+</body>
+</html>

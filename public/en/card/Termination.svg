@@ -1,0 +1,122 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
+<defs>
+  <radialGradient id="bg" cx="45%" cy="22%" r="72%">
+    <stop offset="0%" stop-color="#1e0010"/>
+    <stop offset="100%" stop-color="#070d1a"/>
+  </radialGradient>
+  <radialGradient id="surf" cx="40%" cy="18%" r="78%">
+    <stop offset="0%" stop-color="#180010"/>
+    <stop offset="100%" stop-color="#0b1422"/>
+  </radialGradient>
+  <linearGradient id="bord" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.55"/>
+    <stop offset="45%" stop-color="#1e293b" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.22"/>
+  </linearGradient>
+  <linearGradient id="sep" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.75"/>
+    <stop offset="55%" stop-color="#1e293b" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="commitRow" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#200012"/>
+    <stop offset="100%" stop-color="#140009"/>
+  </linearGradient>
+  <linearGradient id="termLine" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1c1200"/>
+    <stop offset="100%" stop-color="#110b00"/>
+  </linearGradient>
+  <linearGradient id="boxRed" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1e0010"/>
+    <stop offset="100%" stop-color="#130009"/>
+  </linearGradient>
+  <linearGradient id="boxGn" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#001f14"/>
+    <stop offset="100%" stop-color="#000f0a"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1040" height="660" fill="url(#bg)"/>
+
+<!-- Corner accent dots -->
+<circle cx="32" cy="32" r="2.5" fill="#f43f5e" fill-opacity="0.22"/>
+<circle cx="1008" cy="32" r="2.5" fill="#f43f5e" fill-opacity="0.22"/>
+<circle cx="32" cy="628" r="2.5" fill="#f43f5e" fill-opacity="0.08"/>
+<circle cx="1008" cy="628" r="2.5" fill="#f43f5e" fill-opacity="0.08"/>
+
+<!-- Card surface -->
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="url(#surf)"/>
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="none" stroke="url(#bord)" stroke-width="1.5"/>
+<rect x="17" y="17" width="1006" height="626" rx="17.5" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04"/>
+
+<!-- SPEF watermark -->
+<text x="996" y="646" font-size="12" fill="#1e293b" text-anchor="end" letter-spacing="4" font-weight="700" opacity="0.7">SPEF</text>
+
+<!-- Badge with glow ring -->
+<circle cx="62" cy="68" r="28" fill="#f43f5e" fill-opacity="0.07"/>
+<circle cx="62" cy="68" r="24" fill="#1a0010" stroke="#f43f5e" stroke-width="2"/>
+<text x="62" y="78" font-size="28" fill="#f43f5e" text-anchor="middle" font-weight="bold">4</text>
+
+<!-- Title -->
+<text x="102" y="70" font-size="33" fill="#fecdd3" font-weight="bold" letter-spacing="-0.3">Red Lines and Termination Conditions</text>
+
+<!-- Reference -->
+<text x="1004" y="57" font-size="11" fill="#2d3f5a" text-anchor="end" letter-spacing="2.5">HANDBOOK</text>
+<text x="1004" y="77" font-size="17" fill="#3d5478" text-anchor="end">§2.5</text>
+
+<!-- Separator -->
+<line x1="40" y1="104" x2="1000" y2="104" stroke="url(#sep)" stroke-width="1"/>
+
+<!-- Section label -->
+<text x="64" y="140" font-size="11.5" fill="#5a1a2a" letter-spacing="2.5" font-weight="600">PRE-COMMITTED — NO POST-HOC ADJUSTMENT ALLOWED</text>
+
+<!-- Commit row 1 -->
+<rect x="40" y="152" width="960" height="64" rx="10" fill="url(#commitRow)" stroke="#f43f5e" stroke-width="1.2"/>
+<rect x="40" y="152" width="4" height="64" rx="2" fill="#f43f5e"/>
+<!-- Number badge -->
+<circle cx="76" cy="184" r="14" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1.2"/>
+<text x="76" y="189" font-size="15" fill="#f43f5e" text-anchor="middle" font-weight="bold">1</text>
+<text x="104" y="189" font-size="18" fill="#f43f5e" font-weight="bold">Fault Definition R</text>
+<text x="335" y="189" font-size="14.5" fill="#fecdd3">Lock down "does this count as a fault"; prohibit data-driven R adjustment</text>
+
+<!-- Commit row 2 -->
+<rect x="40" y="224" width="960" height="64" rx="10" fill="url(#commitRow)" stroke="#f43f5e" stroke-width="1.2"/>
+<rect x="40" y="224" width="4" height="64" rx="2" fill="#f43f5e" opacity="0.8"/>
+<circle cx="76" cy="256" r="14" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1.2"/>
+<text x="76" y="261" font-size="15" fill="#f43f5e" text-anchor="middle" font-weight="bold">2</text>
+<text x="104" y="261" font-size="18" fill="#f43f5e" font-weight="bold">Kill-switch</text>
+<text x="335" y="261" font-size="14.5" fill="#fecdd3">Pre-commit termination conditions (decision authority stays with present self)</text>
+
+<!-- Commit row 3 -->
+<rect x="40" y="296" width="960" height="64" rx="10" fill="url(#commitRow)" stroke="#f43f5e" stroke-width="1.2"/>
+<rect x="40" y="296" width="4" height="64" rx="2" fill="#f43f5e" opacity="0.6"/>
+<circle cx="76" cy="328" r="14" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1.2"/>
+<text x="76" y="333" font-size="15" fill="#f43f5e" text-anchor="middle" font-weight="bold">3</text>
+<text x="104" y="333" font-size="18" fill="#f43f5e" font-weight="bold">Integrity Collapse Trigger</text>
+<text x="335" y="333" font-size="14.5" fill="#fecdd3">Backfill timestamp / post-hoc R adjustment → flag E5 collapsed → terminate immediately</text>
+
+<!-- Termination line box -->
+<rect x="40" y="374" width="960" height="82" rx="10" fill="url(#termLine)" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="40" y="374" width="4" height="82" rx="2" fill="#f59e0b"/>
+<text x="64" y="403" font-size="11.5" fill="#5a3d10" letter-spacing="2.5" font-weight="600">PRE-COMMITTED TERMINATION LINE</text>
+<text x="64" y="426" font-size="16" fill="#fde68a">At month X, if N(t)'s b stays below threshold <tspan fill="#fbbf24" font-weight="bold">AND</tspan></text>
+<text x="64" y="448" font-size="16" fill="#fde68a">no identifiable "I would miss this now; only ledger catches it" faults → terminate</text>
+
+<!-- Bottom two boxes -->
+<!-- Don't extract motivation -->
+<rect x="40" y="470" width="465" height="158" rx="10" fill="url(#boxRed)" stroke="#3d1020" stroke-width="1.2"/>
+<rect x="40" y="470" width="3" height="158" rx="1.5" fill="#f43f5e" opacity="0.55"/>
+<text x="64" y="503" font-size="17" fill="#fb7185" font-weight="bold">Don't extract motivation from calibration curve</text>
+<text x="64" y="535" font-size="16.5" fill="#fecdd3">Hit rate "plateau" is right-censored data,</text>
+<text x="64" y="560" font-size="16.5" fill="#fecdd3">uninformative.</text>
+<text x="64" y="596" font-size="16.5" fill="#f43f5e" font-weight="bold">Reinforcing it = rebuilding self-deception</text>
+
+<!-- Anchor motivation to throughput -->
+<rect x="535" y="470" width="465" height="158" rx="10" fill="url(#boxGn)" stroke="#1a3d28" stroke-width="1.2"/>
+<rect x="535" y="470" width="3" height="158" rx="1.5" fill="#34d399" opacity="0.55"/>
+<text x="559" y="503" font-size="17" fill="#34d399" font-weight="bold">Anchor motivation to throughput</text>
+<text x="559" y="535" font-size="16.5" fill="#d1fae5">This month's ledger: X faults identified;</text>
+<text x="559" y="563" font-size="16.5" fill="#d1fae5">this week: Y wagers revealed,</text>
+<text x="559" y="596" font-size="16.5" fill="#d1fae5">Z of which rewrote my judgment on the spot</text>
+</svg>

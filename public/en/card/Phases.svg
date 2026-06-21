@@ -1,0 +1,113 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
+<defs>
+  <radialGradient id="bg" cx="45%" cy="22%" r="72%">
+    <stop offset="0%" stop-color="#0d1f3a"/>
+    <stop offset="100%" stop-color="#070d1a"/>
+  </radialGradient>
+  <radialGradient id="surf" cx="40%" cy="18%" r="78%">
+    <stop offset="0%" stop-color="#101e33"/>
+    <stop offset="100%" stop-color="#0b1422"/>
+  </radialGradient>
+  <linearGradient id="bord" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.55"/>
+    <stop offset="45%" stop-color="#1e293b" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.22"/>
+  </linearGradient>
+  <linearGradient id="sep" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.75"/>
+    <stop offset="55%" stop-color="#1e293b" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="fbRow" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1c1000"/>
+    <stop offset="100%" stop-color="#110a00"/>
+  </linearGradient>
+  <linearGradient id="foot" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#001f16"/>
+    <stop offset="100%" stop-color="#000e0a"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1040" height="660" fill="url(#bg)"/>
+
+<!-- Corner accent dots -->
+<circle cx="32" cy="32" r="2.5" fill="#3b82f6" fill-opacity="0.22"/>
+<circle cx="1008" cy="32" r="2.5" fill="#3b82f6" fill-opacity="0.22"/>
+<circle cx="32" cy="628" r="2.5" fill="#3b82f6" fill-opacity="0.08"/>
+<circle cx="1008" cy="628" r="2.5" fill="#3b82f6" fill-opacity="0.08"/>
+
+<!-- Card surface -->
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="url(#surf)"/>
+<!-- Card border gradient -->
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="none" stroke="url(#bord)" stroke-width="1.5"/>
+<!-- Inner highlight rim -->
+<rect x="17" y="17" width="1006" height="626" rx="17.5" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04"/>
+
+<!-- SPEF watermark -->
+<text x="996" y="646" font-size="12" fill="#1e293b" text-anchor="end" letter-spacing="4" font-weight="700" opacity="0.7">SPEF</text>
+
+<!-- Badge with glow ring -->
+<circle cx="62" cy="68" r="28" fill="#3b82f6" fill-opacity="0.07"/>
+<circle cx="62" cy="68" r="24" fill="#05111f" stroke="#3b82f6" stroke-width="2"/>
+<text x="62" y="78" font-size="28" fill="#60a5fa" text-anchor="middle" font-weight="bold">1</text>
+
+<!-- Title -->
+<text x="102" y="70" font-size="33" fill="#bfdbfe" font-weight="bold" letter-spacing="-0.3">SPEF Four-Stage Boundaries</text>
+
+<!-- Reference -->
+<text x="1004" y="57" font-size="11" fill="#2d3f5a" text-anchor="end" letter-spacing="2.5">HANDBOOK</text>
+<text x="1004" y="77" font-size="17" fill="#3d5478" text-anchor="end">§2.1</text>
+
+<!-- Separator -->
+<line x1="40" y1="104" x2="1000" y2="104" stroke="url(#sep)" stroke-width="1"/>
+
+<!-- Column headers -->
+<text x="76" y="137" font-size="11.5" fill="#475569" letter-spacing="2.5" font-weight="600">STAGE</text>
+<text x="320" y="137" font-size="11.5" fill="#475569" letter-spacing="2.5" font-weight="600">WHAT TO DO</text>
+<text x="650" y="137" font-size="11.5" fill="#c0455a" letter-spacing="2.5" font-weight="600">WHAT NOT TO DO</text>
+
+<!-- Column dividers -->
+<line x1="300" y1="116" x2="300" y2="484" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,6" stroke-opacity="0.55"/>
+<line x1="630" y1="116" x2="630" y2="484" stroke="#1e293b" stroke-width="1" stroke-dasharray="2,6" stroke-opacity="0.55"/>
+
+<!-- Scan row -->
+<rect x="40" y="149" width="960" height="74" rx="10" fill="#050f1e" stroke="#1e293b" stroke-opacity="0.9"/>
+<rect x="40" y="149" width="4" height="74" rx="2" fill="#3b82f6"/>
+<text x="76" y="183" font-size="23" fill="#60a5fa" font-weight="bold">Scan</text>
+<text x="76" y="205" font-size="12.5" fill="#2d4060" letter-spacing="1.5">READ SYSTEM STATE</text>
+<text x="320" y="194" font-size="19" fill="#cbd5e1">Establish true state of system/task</text>
+<text x="650" y="194" font-size="19" fill="#fecdd3">Read only; do not propose solutions</text>
+
+<!-- Plan row -->
+<rect x="40" y="231" width="960" height="74" rx="10" fill="#06101f" stroke="#1e293b" stroke-opacity="0.6"/>
+<rect x="40" y="231" width="4" height="74" rx="2" fill="#3b82f6" opacity="0.65"/>
+<text x="76" y="265" font-size="23" fill="#60a5fa" font-weight="bold">Plan</text>
+<text x="76" y="287" font-size="12.5" fill="#2d4060" letter-spacing="1.5">SET DIRECTION</text>
+<text x="320" y="276" font-size="19" fill="#cbd5e1">Design plan based on scan</text>
+<text x="650" y="276" font-size="19" fill="#fecdd3">Declare intent only; do not execute</text>
+
+<!-- Execute row -->
+<rect x="40" y="313" width="960" height="74" rx="10" fill="#050f1e" stroke="#1e293b" stroke-opacity="0.9"/>
+<rect x="40" y="313" width="4" height="74" rx="2" fill="#3b82f6" opacity="0.4"/>
+<text x="76" y="347" font-size="23" fill="#60a5fa" font-weight="bold">Execute</text>
+<text x="76" y="369" font-size="12.5" fill="#2d4060" letter-spacing="1.5">TAKE ACTION</text>
+<text x="320" y="358" font-size="19" fill="#cbd5e1">Implement the plan</text>
+<text x="650" y="358" font-size="16" fill="#fecdd3">Faithful execution only; no judgment calls</text>
+
+<!-- Feedback row - amber -->
+<rect x="40" y="395" width="960" height="74" rx="10" fill="url(#fbRow)" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="40" y="395" width="4" height="74" rx="2" fill="#f59e0b"/>
+<text x="76" y="429" font-size="23" fill="#fbbf24" font-weight="bold">Feedback</text>
+<text x="76" y="451" font-size="12.5" fill="#5c3d10" letter-spacing="1.5">VERIFY &amp; CLOSE LOOP</text>
+<text x="320" y="440" font-size="19" fill="#fde68a">Verify results and close the loop</text>
+<text x="650" y="440" font-size="19" fill="#fbbf24" font-weight="bold">Humans must participate</text>
+
+<!-- Footer box -->
+<rect x="40" y="489" width="960" height="137" rx="10" fill="url(#foot)" stroke="#2dd4bf" stroke-width="1.2"/>
+<rect x="40" y="489" width="3" height="137" rx="1.5" fill="#2dd4bf" opacity="0.55"/>
+<text x="64" y="524" font-size="15.5" fill="#99f6e4">▸ Ideal: S/P/E delegated to Agent; <tspan fill="#2dd4bf" font-weight="bold">F reserved for humans</tspan>.</text>
+<text x="64" y="557" font-size="15.5" fill="#99f6e4">▸ Core principle: Correctness doesn't come from "getting one step right"—<tspan fill="#2dd4bf" font-weight="bold">from closure loops that can be verified</tspan>.</text>
+<text x="64" y="590" font-size="15.5" fill="#99f6e4">▸ <tspan fill="#2dd4bf" font-weight="bold">Only close the loop humans can close</tspan>; automate the rest via compilers/tests.</text>
+<text x="64" y="617" font-size="16" fill="#2a4040">▸ S/P intersection = high-coupling + low-observability node = highest-stakes wager point.</text>
+</svg>

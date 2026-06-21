@@ -1,14 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
+import { uiFor, homeHref } from '../lib/i18n.ts';
+const t = uiFor('zh').notFound;
 ---
 
-<Base title="404">
+<Base lang="zh" title="404">
   <section class="hero reveal reveal-1">
-    <span class="eyebrow">404</span>
-    <h1>这一页不在台账上</h1>
-    <p class="lede">
-      你要找的页面不存在，或已被移动。回到框架首页，从索引重新进入。
-    </p>
-    <p style="margin-top:2rem"><a href="/">← 返回框架首页</a></p>
+    <span class="eyebrow">{t.eyebrow}</span>
+    <h1>{t.h1}</h1>
+    <p class="lede">{t.lede}</p>
+    <p style="margin-top:2rem"><a href={homeHref('zh')}>{t.back}</a></p>
   </section>
 </Base>

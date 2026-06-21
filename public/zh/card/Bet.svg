@@ -1,0 +1,114 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+<defs>
+  <radialGradient id="bg" cx="45%" cy="22%" r="72%">
+    <stop offset="0%" stop-color="#1a1000"/>
+    <stop offset="100%" stop-color="#070d1a"/>
+  </radialGradient>
+  <radialGradient id="surf" cx="40%" cy="18%" r="78%">
+    <stop offset="0%" stop-color="#161100"/>
+    <stop offset="100%" stop-color="#0b1422"/>
+  </radialGradient>
+  <linearGradient id="bord" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55"/>
+    <stop offset="45%" stop-color="#1e293b" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.22"/>
+  </linearGradient>
+  <linearGradient id="sep" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75"/>
+    <stop offset="55%" stop-color="#1e293b" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="tplBox" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1c1100"/>
+    <stop offset="100%" stop-color="#130c00"/>
+  </linearGradient>
+  <linearGradient id="ch1" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#001f18"/>
+    <stop offset="100%" stop-color="#000f0c"/>
+  </linearGradient>
+  <linearGradient id="ch2" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#12003a"/>
+    <stop offset="100%" stop-color="#0a0022"/>
+  </linearGradient>
+  <linearGradient id="warn" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#200012"/>
+    <stop offset="100%" stop-color="#150008"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1040" height="660" fill="url(#bg)"/>
+
+<!-- Corner accent dots -->
+<circle cx="32" cy="32" r="2.5" fill="#f59e0b" fill-opacity="0.22"/>
+<circle cx="1008" cy="32" r="2.5" fill="#f59e0b" fill-opacity="0.22"/>
+<circle cx="32" cy="628" r="2.5" fill="#f59e0b" fill-opacity="0.08"/>
+<circle cx="1008" cy="628" r="2.5" fill="#f59e0b" fill-opacity="0.08"/>
+
+<!-- Card surface -->
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="url(#surf)"/>
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="none" stroke="url(#bord)" stroke-width="1.5"/>
+<rect x="17" y="17" width="1006" height="626" rx="17.5" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04"/>
+
+<!-- SPEF watermark -->
+<text x="996" y="646" font-size="12" fill="#1e293b" text-anchor="end" letter-spacing="4" font-weight="700" opacity="0.7">SPEF</text>
+
+<!-- Badge with glow ring -->
+<circle cx="62" cy="68" r="28" fill="#f59e0b" fill-opacity="0.07"/>
+<circle cx="62" cy="68" r="24" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
+<text x="62" y="78" font-size="28" fill="#fbbf24" text-anchor="middle" font-weight="bold">2</text>
+
+<!-- Title -->
+<text x="102" y="72" font-size="33" fill="#fde68a" font-weight="bold">瞬时预判押注模板</text>
+
+<!-- Reference -->
+<text x="1004" y="57" font-size="11" fill="#2d3f5a" text-anchor="end" letter-spacing="2.5">手册</text>
+<text x="1004" y="77" font-size="17" fill="#3d5478" text-anchor="end">§2.2</text>
+
+<!-- Separator -->
+<line x1="40" y1="104" x2="1000" y2="104" stroke="url(#sep)" stroke-width="1"/>
+
+<!-- Template box -->
+<rect x="40" y="126" width="960" height="152" rx="12" fill="url(#tplBox)" stroke="#f59e0b" stroke-width="2"/>
+<rect x="40" y="126" width="4" height="152" rx="2" fill="#f59e0b" opacity="0.7"/>
+<text x="64" y="162" font-size="18" fill="#94a3b8">押一个高风险点"应该没问题"的当下，写：</text>
+<text x="520" y="212" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">「预判此处无误，因为 ___」</text>
+<text x="520" y="255" font-size="18.5" fill="#fde68a" text-anchor="middle">写成赖不掉的硬陈述 →「看结果前」带时间戳落盘（git 提交）</text>
+
+<!-- Confidence tier -->
+<text x="64" y="318" font-size="20" fill="#cbd5e1">自信度三档（与赌注一起记）：</text>
+<circle cx="452" cy="311" r="12" fill="#34d399" fill-opacity="0.15" stroke="#34d399" stroke-width="1.5"/>
+<circle cx="452" cy="311" r="6" fill="#34d399"/>
+<text x="473" y="319" font-size="20" fill="#d1fae5">高</text>
+<circle cx="565" cy="311" r="12" fill="#fbbf24" fill-opacity="0.15" stroke="#fbbf24" stroke-width="1.5"/>
+<circle cx="565" cy="311" r="6" fill="#fbbf24"/>
+<text x="586" y="319" font-size="20" fill="#fde68a">中</text>
+<circle cx="678" cy="311" r="12" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1.5"/>
+<circle cx="678" cy="311" r="6" fill="#f43f5e"/>
+<text x="699" y="319" font-size="20" fill="#fecdd3">低</text>
+
+<!-- Channel section header -->
+<text x="64" y="371" font-size="21" fill="#cbd5e1" font-weight="bold">两条通道（承重不同，别混）</text>
+
+<!-- Channel 1 - teal -->
+<rect x="40" y="386" width="465" height="152" rx="10" fill="url(#ch1)" stroke="#2dd4bf" stroke-width="1.5"/>
+<rect x="40" y="386" width="3" height="152" rx="1.5" fill="#2dd4bf" opacity="0.7"/>
+<text x="64" y="421" font-size="21" fill="#2dd4bf" font-weight="bold">通道一　预测—结算</text>
+<text x="64" y="453" font-size="17" fill="#99f6e4">只靠 存在 + 可证伪 + 现实结算。</text>
+<text x="64" y="481" font-size="17" fill="#99f6e4">confabulation 腐蚀不到它。</text>
+<text x="64" y="516" font-size="18" fill="#34d399" font-weight="bold">→ 承重主力</text>
+
+<!-- Channel 2 - violet -->
+<rect x="535" y="386" width="465" height="152" rx="10" fill="url(#ch2)" stroke="#a78bfa" stroke-width="1.5"/>
+<rect x="535" y="386" width="3" height="152" rx="1.5" fill="#a78bfa" opacity="0.7"/>
+<text x="559" y="421" font-size="21" fill="#c084fc" font-weight="bold">通道二　写"因为"</text>
+<text x="559" y="453" font-size="17" fill="#ede9fe">靠 self-explanation 暴露裂缝。</text>
+<text x="559" y="481" font-size="17" fill="#ede9fe">confabulation 严重时失效。</text>
+<text x="559" y="516" font-size="18" fill="#a78bfa" font-weight="bold">→ 锦上添花</text>
+
+<!-- Warning box -->
+<rect x="40" y="552" width="960" height="76" rx="10" fill="url(#warn)" stroke="#f43f5e" stroke-width="1.2"/>
+<rect x="40" y="552" width="3" height="76" rx="1.5" fill="#f43f5e" opacity="0.8"/>
+<text x="64" y="584" font-size="17.5" fill="#fecdd3">⚠ 别用"两个一致的因为"去抓 confabulation——会奖励最会圆话的人。</text>
+<text x="64" y="612" font-size="17.5" fill="#fda4af">　两个"因为"的真正用途：扩大可证伪面、提升分辨力。</text>
+</svg>

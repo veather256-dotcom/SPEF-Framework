@@ -1,43 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-// The argument map is a self-contained, theme-aware HTML doc; isolate its styles
-// in an iframe. It is synced into site/public/diagram.html by scripts/sync-static.mjs.
-// The iframe is same-origin, so we mirror the site's resolved theme onto its
-// <html data-theme> (the diagram falls back to OS preference on a direct visit).
+import DiagramFrame from '../components/DiagramFrame.astro';
+import { uiFor } from '../lib/i18n.ts';
+const t = uiFor('zh').diagram;
 ---
 
-<Base title="论证图" bleed>
-  <iframe
-    class="diagram-frame"
-    src="/diagram.html"
-    title="SPEF 三线论证映射图"></iframe>
-
-  <script is:inline>
-    (() => {
-      const frame = document.querySelector('.diagram-frame');
-      if (!frame) return;
-      const resolve = () =>
-        document.documentElement.getAttribute('data-theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      const apply = () => {
-        try {
-          const doc = frame.contentDocument;
-          if (doc && doc.documentElement) {
-            doc.documentElement.setAttribute('data-theme', resolve());
-          }
-        } catch (e) {}
-      };
-      frame.addEventListener('load', apply);
-      // Cover the case where the frame is already loaded before this runs.
-      if (frame.contentDocument && frame.contentDocument.readyState === 'complete') apply();
-      // Re-apply when the site theme toggles or the OS preference changes.
-      new MutationObserver(apply).observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme'],
-      });
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', apply);
-    })();
-  </script>
+<Base lang="zh" title={t.title} bleed>
+  <DiagramFrame lang="zh" />
 </Base>

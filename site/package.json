@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "prebuild": "node scripts/sync-static.mjs",
     "build": "astro build",
+    "render-cards": "node scripts/render-cards.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

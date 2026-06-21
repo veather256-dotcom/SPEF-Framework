@@ -1,0 +1,45 @@
+---
+import { diagramSrc, uiFor, type Lang } from '../lib/i18n.ts';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = uiFor(lang).diagram;
+// The argument map is a self-contained, theme-aware HTML doc; isolate its styles
+// in an iframe. Per-locale copies are synced into site/public/ by
+// scripts/sync-static.mjs (zh -> /diagram.html, en -> /en/diagram.html).
+// The iframe is same-origin, so we mirror the site's resolved theme onto its
+// <html data-theme> (the diagram falls back to OS preference on a direct visit).
+---
+
+<iframe class="diagram-frame" src={diagramSrc(lang)} title={t.frameTitle}></iframe>
+
+<script is:inline>
+  (() => {
+    const frame = document.querySelector('.diagram-frame');
+    if (!frame) return;
+    const resolve = () =>
+      document.documentElement.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const apply = () => {
+      try {
+        const doc = frame.contentDocument;
+        if (doc && doc.documentElement) {
+          doc.documentElement.setAttribute('data-theme', resolve());
+        }
+      } catch (e) {}
+    };
+    frame.addEventListener('load', apply);
+    // Cover the case where the frame is already loaded before this runs.
+    if (frame.contentDocument && frame.contentDocument.readyState === 'complete') apply();
+    // Re-apply when the site theme toggles or the OS preference changes.
+    new MutationObserver(apply).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', apply);
+  })();
+</script>

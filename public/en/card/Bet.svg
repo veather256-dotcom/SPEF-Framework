@@ -1,0 +1,114 @@
+<svg viewBox="0 0 1040 660" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif">
+<defs>
+  <radialGradient id="bg" cx="45%" cy="22%" r="72%">
+    <stop offset="0%" stop-color="#1a1000"/>
+    <stop offset="100%" stop-color="#070d1a"/>
+  </radialGradient>
+  <radialGradient id="surf" cx="40%" cy="18%" r="78%">
+    <stop offset="0%" stop-color="#161100"/>
+    <stop offset="100%" stop-color="#0b1422"/>
+  </radialGradient>
+  <linearGradient id="bord" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55"/>
+    <stop offset="45%" stop-color="#1e293b" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.22"/>
+  </linearGradient>
+  <linearGradient id="sep" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75"/>
+    <stop offset="55%" stop-color="#1e293b" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="tplBox" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1c1100"/>
+    <stop offset="100%" stop-color="#130c00"/>
+  </linearGradient>
+  <linearGradient id="ch1" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#001f18"/>
+    <stop offset="100%" stop-color="#000f0c"/>
+  </linearGradient>
+  <linearGradient id="ch2" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#12003a"/>
+    <stop offset="100%" stop-color="#0a0022"/>
+  </linearGradient>
+  <linearGradient id="warn" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#200012"/>
+    <stop offset="100%" stop-color="#150008"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1040" height="660" fill="url(#bg)"/>
+
+<!-- Corner accent dots -->
+<circle cx="32" cy="32" r="2.5" fill="#f59e0b" fill-opacity="0.22"/>
+<circle cx="1008" cy="32" r="2.5" fill="#f59e0b" fill-opacity="0.22"/>
+<circle cx="32" cy="628" r="2.5" fill="#f59e0b" fill-opacity="0.08"/>
+<circle cx="1008" cy="628" r="2.5" fill="#f59e0b" fill-opacity="0.08"/>
+
+<!-- Card surface -->
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="url(#surf)"/>
+<rect x="16" y="16" width="1008" height="628" rx="18" fill="none" stroke="url(#bord)" stroke-width="1.5"/>
+<rect x="17" y="17" width="1006" height="626" rx="17.5" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04"/>
+
+<!-- SPEF watermark -->
+<text x="996" y="646" font-size="12" fill="#1e293b" text-anchor="end" letter-spacing="4" font-weight="700" opacity="0.7">SPEF</text>
+
+<!-- Badge with glow ring -->
+<circle cx="62" cy="68" r="28" fill="#f59e0b" fill-opacity="0.07"/>
+<circle cx="62" cy="68" r="24" fill="#150a00" stroke="#f59e0b" stroke-width="2"/>
+<text x="62" y="78" font-size="28" fill="#fbbf24" text-anchor="middle" font-weight="bold">2</text>
+
+<!-- Title -->
+<text x="102" y="70" font-size="33" fill="#fde68a" font-weight="bold" letter-spacing="-0.3">Instantaneous Prediction Wager Template</text>
+
+<!-- Reference -->
+<text x="1004" y="57" font-size="11" fill="#2d3f5a" text-anchor="end" letter-spacing="2.5">HANDBOOK</text>
+<text x="1004" y="77" font-size="17" fill="#3d5478" text-anchor="end">§2.2</text>
+
+<!-- Separator -->
+<line x1="40" y1="104" x2="1000" y2="104" stroke="url(#sep)" stroke-width="1"/>
+
+<!-- Template box -->
+<rect x="40" y="126" width="960" height="152" rx="12" fill="url(#tplBox)" stroke="#f59e0b" stroke-width="2"/>
+<rect x="40" y="126" width="4" height="152" rx="2" fill="#f59e0b" opacity="0.7"/>
+<text x="64" y="161" font-size="17" fill="#7a6030">At the moment you're wagering on a high-risk point "should be fine", write:</text>
+<text x="520" y="211" font-size="32" fill="#fbbf24" text-anchor="middle" font-weight="bold">"I predict this is correct because ___"</text>
+<text x="520" y="254" font-size="18.5" fill="#fde68a" text-anchor="middle">Write as an unfalsifiable statement → timestamp-lock before seeing results (git commit)</text>
+
+<!-- Confidence tier -->
+<text x="64" y="316" font-size="19.5" fill="#cbd5e1">Confidence three-tier (log with wager):</text>
+<circle cx="432" cy="310" r="12" fill="#34d399" fill-opacity="0.15" stroke="#34d399" stroke-width="1.5"/>
+<circle cx="432" cy="310" r="6" fill="#34d399"/>
+<text x="453" y="317" font-size="19.5" fill="#d1fae5">High</text>
+<circle cx="565" cy="310" r="12" fill="#fbbf24" fill-opacity="0.15" stroke="#fbbf24" stroke-width="1.5"/>
+<circle cx="565" cy="310" r="6" fill="#fbbf24"/>
+<text x="585" y="317" font-size="19.5" fill="#fde68a">Medium</text>
+<circle cx="700" cy="310" r="12" fill="#f43f5e" fill-opacity="0.15" stroke="#f43f5e" stroke-width="1.5"/>
+<circle cx="700" cy="310" r="6" fill="#f43f5e"/>
+<text x="720" y="317" font-size="19.5" fill="#fecdd3">Low</text>
+
+<!-- Channel section header -->
+<text x="64" y="370" font-size="21" fill="#cbd5e1" font-weight="bold" letter-spacing="-0.2">Two channels (different load-bearing capacity; keep separate)</text>
+
+<!-- Channel 1 - teal -->
+<rect x="40" y="386" width="465" height="152" rx="10" fill="url(#ch1)" stroke="#2dd4bf" stroke-width="1.5"/>
+<rect x="40" y="386" width="3" height="152" rx="1.5" fill="#2dd4bf" opacity="0.7"/>
+<text x="64" y="420" font-size="20.5" fill="#2dd4bf" font-weight="bold">Channel One  Prediction—Settlement</text>
+<text x="64" y="451" font-size="14" fill="#99f6e4">Depends only on existence + falsifiability + reality settlement.</text>
+<text x="64" y="479" font-size="14" fill="#99f6e4">Confabulation cannot corrupt it.</text>
+<text x="64" y="514" font-size="17.5" fill="#34d399" font-weight="bold">→ Primary load-bearer</text>
+
+<!-- Channel 2 - violet -->
+<rect x="535" y="386" width="465" height="152" rx="10" fill="url(#ch2)" stroke="#a78bfa" stroke-width="1.5"/>
+<rect x="535" y="386" width="3" height="152" rx="1.5" fill="#a78bfa" opacity="0.7"/>
+<text x="559" y="420" font-size="20.5" fill="#c084fc" font-weight="bold">Channel Two  Write 'because'</text>
+<text x="559" y="451" font-size="14" fill="#ede9fe">Relies on self-explanation to expose cracks.</text>
+<text x="559" y="479" font-size="14" fill="#ede9fe">Fails when confabulation is severe.</text>
+<text x="559" y="514" font-size="17.5" fill="#a78bfa" font-weight="bold">→ Bonus value</text>
+
+<!-- Warning box -->
+<rect x="40" y="552" width="960" height="76" rx="10" fill="url(#warn)" stroke="#f43f5e" stroke-width="1.2"/>
+<rect x="40" y="552" width="3" height="76" rx="1.5" fill="#f43f5e" opacity="0.8"/>
+<text x="64" y="583" font-size="17.5" fill="#fecdd3">⚠  Do not use "two consistent becauses" to catch confabulation — rewards the most fluent.</text>
+<text x="64" y="611" font-size="17.5" fill="#fda4af">     Two 'becauses' serve to expand falsifiability and improve resolution.</text>
+</svg>

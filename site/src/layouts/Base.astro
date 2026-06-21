@@ -1,33 +1,42 @@
 ---
 import 'katex/dist/katex.min.css';
 import '../styles/global.css';
+import { uiFor, otherLang, prefix, type Lang } from '../lib/i18n.ts';
 
 interface Props {
+  /** Active locale. Defaults to the root locale (zh). */
+  lang?: Lang;
   title?: string;
   description?: string;
   /** When true, main fills the viewport with no padding (used by the diagram page). */
   bleed?: boolean;
 }
 
-const {
-  title,
-  description = '在低效度反馈环境中校准人类判断的工作流方法论。最危险的错误从不触发报警，自我评估在原理上不可靠，所以判断必须被外置成可证伪、带时间戳、由现实结算的痕迹。',
-  bleed = false,
-} = Astro.props;
+const { lang = 'zh', title, description, bleed = false } = Astro.props;
+const t = uiFor(lang);
+const desc = description ?? t.siteDescription;
 
 const pageTitle = title ? `${title} · SPEF` : 'SPEF';
+const home = prefix(lang) + '/';
+const diagram = prefix(lang) + '/diagram';
+
 const path = Astro.url.pathname;
-const isHome = path === '/';
-const isDiagram = path.startsWith('/diagram');
+const isHome = path === home || path === prefix(lang) || path === prefix(lang) + '/';
+const isDiagram = path.startsWith(diagram);
+
+// Language switcher target: the equivalent page in the other locale.
+const other = otherLang(lang);
+const rest = lang === 'en' ? path.replace(/^\/en/, '') || '/' : path;
+const switchHref = (other === 'en' ? '/en' + rest : rest).replace(/\/{2,}/g, '/');
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content={desc} />
     <meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#070d1a" media="(prefers-color-scheme: dark)" />
     <title>{pageTitle}</title>
@@ -47,16 +56,17 @@ const isDiagram = path.startsWith('/diagram');
 
     <header class="site-header">
       <div class="bar">
-        <a href="/" class="brand"><span class="dot" aria-hidden="true"></span>SPEF</a>
+        <a href={home} class="brand"><span class="dot" aria-hidden="true"></span>SPEF</a>
         <nav>
-          <a href="/" class={isHome ? 'active' : ''}>框架</a>
-          <a href="/diagram" class={isDiagram ? 'active' : ''}>论证图</a>
+          <a href={home} class={isHome ? 'active' : ''}>{t.nav.framework}</a>
+          <a href={diagram} class={isDiagram ? 'active' : ''}>{t.nav.diagram}</a>
+          <a class="lang-switch" href={switchHref} hreflang={other} rel="alternate">{t.nav.switchLang}</a>
           <button
             type="button"
             class="theme-toggle"
             id="themeToggle"
-            aria-label="切换深浅色"
-            title="切换深浅色">
+            aria-label={t.nav.toggleTheme}
+            title={t.nav.toggleTheme}>
             <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
             </svg>
@@ -76,10 +86,8 @@ const isDiagram = path.startsWith('/diagram');
     {
       !bleed && (
         <footer class="site-footer">
-          <p>SPEF · 在低效度反馈环境中校准人类判断的工作流方法论</p>
-          <p class="fine">
-            它给不出"你已进步"的证明；它给每一次自欺装一份迟到、但赖不掉的账单。
-          </p>
+          <p>{t.footer.line}</p>
+          <p class="fine">{t.footer.fine}</p>
         </footer>
       )
     }

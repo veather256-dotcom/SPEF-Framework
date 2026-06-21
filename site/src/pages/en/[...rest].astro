@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import DiagramFrame from '../../components/DiagramFrame.astro';
+import { metaFor, homeHref, uiFor } from '../../lib/i18n.ts';
+
+export async function getStaticPaths() {
+  const enDocs = await getCollection('docsEn');
+  return [
+    // /en/
+    { params: { rest: undefined }, props: { type: 'home' as const } },
+    // /en/diagram
+    { params: { rest: 'diagram' }, props: { type: 'diagram' as const } },
+    // /en/docs/...
+    ...enDocs.map((doc) => ({
+      params: { rest: `docs/${doc.id}` },
+      props: { type: 'docs' as const, doc },
+    })),
+  ];
+}
+
+const { type, doc } = Astro.props;
+const Content = type === 'docs' ? (await render(doc)).Content : null;
+const meta = type === 'docs' ? metaFor('en', doc!.id) : null;
+const t = type === 'docs' ? uiFor('en').docs : null;
+const tDiagram = uiFor('en').diagram;
+---
+
+{type === 'home' && (
+  <Base lang="en">
+    <Home lang="en" />
+  </Base>
+)}
+
+{type === 'diagram' && (
+  <Base lang="en" title={tDiagram.title} bleed>
+    <DiagramFrame lang="en" />
+  </Base>
+)}
+
+{type === 'docs' && (
+  <Base lang="en" title={meta!.title} description={meta!.blurb}>
+    <div class="doc-head">
+      <a class="back" href={homeHref('en')}>{t!.back}</a>
+    </div>
+    <article class="prose">
+      <Content />
+    </article>
+  </Base>
+)}
