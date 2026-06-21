@@ -364,7 +364,7 @@ main:has(.doc-layout) { max-width: var(--wide); }
 
 /* ---------- doc cards ---------- */
 .doc-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.doc-cards .diagram-cta { grid-column: 1 / -1; margin-top: 0; }
+.doc-cards .diagram-cta { grid-column: 1 / -1; margin-top: 0; } /* unused; diagram now a .doc-card */
 .doc-card {
   display: block;
   padding: 1.4rem 1.55rem;

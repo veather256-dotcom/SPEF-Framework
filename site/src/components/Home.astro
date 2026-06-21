@@ -60,12 +60,12 @@ const docs = (await getCollection(collectionFor(lang)))
     ))
   }
 
-  <a class="diagram-cta" href={diagramHref(lang)}>
-    <span>
-      <strong>{t.diagramCtaTitle}</strong>
-      <span class="sub">{t.diagramCtaSub}</span>
-    </span>
-    <span class="arrow">→</span>
+  <a class="doc-card" href={diagramHref(lang)}>
+    <div class="row">
+      <h3>{t.diagramCtaTitle}</h3>
+      <span class="arrow">→</span>
+    </div>
+    <p>{t.diagramCtaSub}</p>
   </a>
 </div>
 
